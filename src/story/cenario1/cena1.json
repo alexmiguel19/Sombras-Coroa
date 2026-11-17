@@ -1,0 +1,44 @@
+{
+  "cenario": 1,
+  "cena": 1,
+  "titulo": "Primeira Guerra Fernandina",
+  "subtitulo": "No Paço Real — a disputa pelo trono de Castela",
+  "data": "1369",
+  "local": "Paço Real",
+  "narrador": "Em 1369, Pedro I de Castela foi assassinado pelo seu meio-irmão, Henrique de Trastâmara, que ocupou o trono.",
+  "dialogos": {
+    "rei": [
+      { "quem": "escudeiro", "texto": "Majestade, porque queremos entrar em guerra com Castela?" },
+      { "quem": "fernando", "texto": "Porque também tenho direitos àquela Coroa! Sou descendente dos reis castelhanos e não reconheço Henrique como rei legítimo." },
+      { "quem": "conselheiro", "texto": "Várias cidades da Galiza apoiam a vossa candidatura, Majestade. Mas Henrique II possui um exército poderoso!" }
+    ],
+    "mensagem": [
+      { "quem": "conselheiro", "texto": "Escudeiro, leva esta mensagem do rei às cidades da Galiza que apoiam a sua candidatura.", "adicionada": true },
+      { "quem": "conselheiro", "texto": "Antes de partires, vai à mesa de guerra e mostra-me no mapa onde fica a Galiza.", "adicionada": true }
+    ],
+    "rei_depois": [
+      { "quem": "fernando", "texto": "O conselheiro tem uma mensagem para ti. Não percas tempo, escudeiro!", "adicionada": true }
+    ],
+    "conselheiro_antes": [
+      { "quem": "conselheiro", "texto": "O rei quer falar contigo. Aproxima-te do trono.", "adicionada": true }
+    ],
+    "guarda": [
+      { "quem": "guarda", "texto": "Fala com o rei, escudeiro. Ninguém sai do Paço sem as ordens de Sua Majestade.", "adicionada": true }
+    ]
+  },
+  "objetivos": {
+    "falar_rei": "Fala com D. Fernando, junto ao trono.",
+    "falar_conselheiro": "Recebe a mensagem do Conselheiro.",
+    "mapa": "Vai à mesa de guerra e localiza a Galiza no mapa.",
+    "concluida": "Cena concluída!"
+  },
+  "textos": {
+    "toast_mensagem": "Recebeste a mensagem do rei para as cidades da Galiza.",
+    "mapa_titulo": "Onde fica a Galiza?",
+    "mapa_instrucao": "Clica na região da Galiza para iniciares a viagem.",
+    "mapa_dica": "A Galiza fica a norte de Portugal, junto ao oceano Atlântico.",
+    "mapa_certo": "Muito bem! A Galiza fica a norte de Portugal. Em 1369, pertencia ao reino de Castela, mas várias das suas cidades apoiavam D. Fernando.",
+    "fim_titulo": "Cena concluída",
+    "fim_texto": "Partes rumo à Galiza com a mensagem do rei. D. Fernando reclama o trono de Castela, mas Henrique II tem um exército poderoso..."
+  }
+}
