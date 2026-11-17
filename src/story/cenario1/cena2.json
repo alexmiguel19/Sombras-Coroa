@@ -1,0 +1,49 @@
+{
+  "cenario": 1,
+  "cena": 2,
+  "titulo": "Primeira Guerra Fernandina",
+  "subtitulo": "Na Galiza — a campanha militar e os aliados",
+  "data": "1369–1370",
+  "local": "Acampamento na Galiza",
+  "narrador": "D. Fernando entrou na Galiza e foi bem recebido em cidades como a Corunha e Tui.",
+  "dialogos": {
+    "chegada": [
+      { "quem": "escudeiro", "texto": "Se estas cidades nos apoiam, porque estão os soldados a retirar-se?" },
+      { "quem": "soldado", "texto": "Henrique II avança contra nós! O nosso rei decidiu retirar-se para evitar enfrentar um exército mais poderoso." },
+      { "quem": "conselheiro", "texto": "Tentámos obter o apoio de Aragão, mas não conseguimos derrotar Henrique II." },
+      { "quem": "conselheiro", "texto": "Escudeiro, avisa os três soldados que ainda estão de guarda no acampamento. Depois regressa à tenda de comando.", "adicionada": true }
+    ],
+    "soldado1": [
+      { "quem": "escudeiro", "texto": "Ordem do rei: vamos retirar! O exército de Henrique II aproxima-se.", "adicionada": true },
+      { "quem": "soldado", "texto": "Retirar? Mas a Corunha e Tui estão do nosso lado! Está bem, vou juntar as minhas coisas.", "adicionada": true }
+    ],
+    "soldado2": [
+      { "quem": "escudeiro", "texto": "Prepara-te para partir. O rei decidiu evitar a batalha.", "adicionada": true },
+      { "quem": "soldado", "texto": "Sem a ajuda de Aragão, somos poucos contra os castelhanos. É melhor assim.", "adicionada": true }
+    ],
+    "soldado3": [
+      { "quem": "escudeiro", "texto": "Apaga a fogueira e segue para a tenda de comando. Vamos retirar!", "adicionada": true },
+      { "quem": "soldado", "texto": "Já se veem os estandartes de Castela no horizonte... Obrigado pelo aviso, escudeiro.", "adicionada": true }
+    ],
+    "ja_avisado": [
+      { "quem": "soldado", "texto": "Já sei, escudeiro. Estou a preparar a retirada.", "adicionada": true }
+    ],
+    "conselheiro_espera": [
+      { "quem": "conselheiro", "texto": "Ainda há soldados por avisar. Procura-os pelo acampamento.", "adicionada": true }
+    ],
+    "tenda": [
+      { "quem": "conselheiro", "texto": "Fizeste bem, escudeiro. Partimos antes que Henrique II nos alcance.", "adicionada": true }
+    ]
+  },
+  "objetivos": {
+    "falar_soldado": "Fala com o soldado junto à entrada do acampamento.",
+    "avisar": "Avisa três soldados da retirada",
+    "tenda": "Regressa à tenda de comando.",
+    "concluida": "Cena concluída!"
+  },
+  "textos": {
+    "toast_avisado": "Soldado avisado",
+    "fim_titulo": "Cena concluída",
+    "fim_texto": "O exército português retira da Galiza. Apesar do apoio de cidades como a Corunha e Tui, D. Fernando não conseguiu enfrentar Henrique II nem obter a ajuda de Aragão..."
+  }
+}

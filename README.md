@@ -15,6 +15,8 @@ npm run build      # versão final estática em dist/
 npm run preview    # testar a versão final
 ```
 
+Para começar numa cena específica, acrescentar `?cena=N` ao endereço (ex.: `http://localhost:5173/?cena=2`).
+
 A pasta `dist/` pode ser publicada em qualquer servidor estático (por exemplo, GitHub Pages).
 
 ## Controlos
@@ -58,6 +60,7 @@ Se um modelo não carregar, o jogo usa automaticamente a versão simples da pers
 | Cena | Estado |
 |---|---|
 | 1.º Cenário · Cena 1 — No Paço Real (1369) | ✅ jogável |
-| 1.º Cenário · Cenas 2–3 | por fazer |
+| 1.º Cenário · Cena 2 — Na Galiza (1369–1370) | ✅ jogável |
+| 1.º Cenário · Cena 3 — O Tratado de Alcoutim (1371) | por fazer |
 | 2.º Cenário · Cenas 1–3 | por fazer |
 | 3.º Cenário · Cenas 1–3 e Epílogo | por fazer |

@@ -1,8 +1,9 @@
 import * as THREE from 'three';
 import { Input } from './Input';
-import { CollisionWorld } from './Colliders';
+import { CollisionWorld, type BoxCollider } from './Colliders';
 import { PlayerController } from './PlayerController';
 import type { Avatar } from '../world/Avatar';
+import { lerpAngle } from '../world/Character';
 import { UI } from '../ui/UI';
 import type { Fala, QuemFala } from '../story/types';
 
@@ -23,6 +24,11 @@ export interface Npc {
   /** Vira-se para o escudeiro quando ele se aproxima. */
   watchPlayer: boolean;
   homeRotation: number;
+  /** Destino para onde a personagem está a andar (null = parada). */
+  walkTo: THREE.Vector3 | null;
+  walkSpeed: number;
+  /** Caixa de colisão que acompanha a personagem. */
+  collider: BoxCollider;
 }
 
 /** Uma cena jogável: constrói o cenário 3D e corre o guião da missão. */
@@ -105,8 +111,9 @@ export class Game {
     character.root.position.set(x, y, z);
     character.root.rotation.y = rotation;
     this.scene.add(character.root);
-    this.world.addRect(x, z, 0.7, 0.7);
-    const npc = { id, character, watchPlayer, homeRotation: rotation };
+    const collider: BoxCollider = { minX: x - 0.35, maxX: x + 0.35, minZ: z - 0.35, maxZ: z + 0.35 };
+    this.world.addBox(collider);
+    const npc: Npc = { id, character, watchPlayer, homeRotation: rotation, walkTo: null, walkSpeed: 2.6, collider };
     this.npcs.push(npc);
     return npc;
   }
@@ -134,14 +141,18 @@ export class Game {
     }
   }
 
-  /** Mostra uma conversa, animando quem fala e virando a câmara para essa personagem. */
-  talk(lines: Fala[]): Promise<void> {
+  /**
+   * Mostra uma conversa, animando quem fala e virando a câmara para essa personagem.
+   * `who` indica a personagem concreta quando há várias com o mesmo papel (ex.: três soldados).
+   */
+  talk(lines: Fala[], who: Partial<Record<QuemFala, Npc>> = {}): Promise<void> {
+    const find = (q: QuemFala) => who[q] ?? this.npcs.find((n) => n.id === q);
     // Enquadrar logo de início a primeira personagem da conversa (mesmo que o escudeiro fale primeiro).
-    const first = lines.map((l) => this.npcs.find((n) => n.id === l.quem)).find(Boolean);
+    const first = lines.map((l) => find(l.quem)).find(Boolean);
     if (first) this.player.focusOn(first.character.root.position);
     return this.busyWith(() =>
       this.ui.playDialog(lines, (line) => {
-        const npc = this.npcs.find((n) => n.id === line.quem);
+        const npc = find(line.quem);
         if (npc) {
           npc.character.talk(Math.max(2, line.texto.length / 18));
           this.player.focusOn(npc.character.root.position);
@@ -160,10 +171,33 @@ export class Game {
 
     const ppos = this.player.position;
     for (const npc of this.npcs) {
-      const near = npc.watchPlayer && npc.character.root.position.distanceTo(ppos) < 4.5;
-      if (near) npc.character.faceTowards(ppos, dt, 4);
-      else npc.character.root.rotation.y += (npc.homeRotation - npc.character.root.rotation.y) * Math.min(1, dt * 2);
-      npc.character.update(dt, 0);
+      const pos = npc.character.root.position;
+      let speed = 0;
+      if (npc.walkTo) {
+        // Andar em linha reta até ao destino (sem colisões entre personagens: os caminhos são escolhidos livres).
+        const dx = npc.walkTo.x - pos.x;
+        const dz = npc.walkTo.z - pos.z;
+        const d = Math.hypot(dx, dz);
+        if (d < 0.1) {
+          npc.homeRotation = npc.character.root.rotation.y;
+          npc.walkTo = null;
+        } else {
+          const step = Math.min(d, npc.walkSpeed * dt);
+          pos.x += (dx / d) * step;
+          pos.z += (dz / d) * step;
+          speed = npc.walkSpeed;
+          npc.character.faceTowards(npc.walkTo, dt, 8);
+        }
+        npc.collider.minX = pos.x - 0.35;
+        npc.collider.maxX = pos.x + 0.35;
+        npc.collider.minZ = pos.z - 0.35;
+        npc.collider.maxZ = pos.z + 0.35;
+      } else {
+        const near = npc.watchPlayer && pos.distanceTo(ppos) < 4.5;
+        if (near) npc.character.faceTowards(ppos, dt, 4);
+        else npc.character.root.rotation.y = lerpAngle(npc.character.root.rotation.y, npc.homeRotation, Math.min(1, dt * 2));
+      }
+      npc.character.update(dt, speed);
     }
 
     this.updateInteraction(blocked);

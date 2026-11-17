@@ -191,3 +191,64 @@ export function tableMap(): THREE.CanvasTexture {
     g.strokeRect(0, 0, 512, 384);
   });
 }
+
+/** Relva com pequenas variações e tufos. */
+export function grass(repeat: [number, number]): THREE.CanvasTexture {
+  return canvasTexture(256, 256, (g) => {
+    const r = rng(11);
+    g.fillStyle = '#5d7a3a';
+    g.fillRect(0, 0, 256, 256);
+    for (let i = 0; i < 1800; i++) {
+      g.fillStyle = shade([93, 122, 58], 0.75 + r() * 0.5);
+      g.fillRect(r() * 256, r() * 256, 2, 3 + r() * 5);
+    }
+    for (let i = 0; i < 30; i++) {
+      g.fillStyle = `rgba(120,95,50,${0.1 + r() * 0.15})`;
+      g.beginPath();
+      g.arc(r() * 256, r() * 256, 4 + r() * 12, 0, Math.PI * 2);
+      g.fill();
+    }
+  }, repeat);
+}
+
+/** Terra batida (caminhos do acampamento). */
+export function dirt(repeat: [number, number]): THREE.CanvasTexture {
+  return canvasTexture(256, 256, (g) => {
+    const r = rng(23);
+    g.fillStyle = '#8a6c46';
+    g.fillRect(0, 0, 256, 256);
+    for (let i = 0; i < 900; i++) {
+      g.fillStyle = shade([138, 108, 70], 0.7 + r() * 0.5);
+      g.fillRect(r() * 256, r() * 256, 2 + r() * 4, 2 + r() * 4);
+    }
+  }, repeat);
+}
+
+/** Lona das tendas, com riscas. */
+export function tentCloth(stripe: string, base = '#e9dcc0'): THREE.CanvasTexture {
+  return canvasTexture(256, 256, (g) => {
+    g.fillStyle = base;
+    g.fillRect(0, 0, 256, 256);
+    g.fillStyle = stripe;
+    for (let x = 0; x < 256; x += 64) g.fillRect(x, 0, 32, 256);
+    g.fillStyle = 'rgba(0,0,0,0.06)';
+    for (let y = 0; y < 256; y += 4) g.fillRect(0, y, 256, 1);
+  });
+}
+
+/** Estandarte de Castela (simplificado): castelo dourado sobre vermelho. */
+export function castileBanner(): THREE.CanvasTexture {
+  return canvasTexture(256, 384, (g) => {
+    g.fillStyle = '#a3161a';
+    g.fillRect(0, 0, 256, 384);
+    g.fillStyle = '#e0b84a';
+    g.fillRect(68, 150, 120, 120);
+    for (let x = 68; x < 188; x += 30) g.fillRect(x, 125, 18, 30);
+    g.fillRect(108, 95, 40, 60);
+    for (let x = 108; x < 148; x += 16) g.fillRect(x, 80, 10, 18);
+    g.fillStyle = '#1f3c8c';
+    g.fillRect(116, 220, 24, 50);
+    g.fillStyle = '#e0b84a';
+    for (let x = 0; x < 256; x += 16) g.fillRect(x, 362, 8, 22);
+  });
+}
