@@ -1,0 +1,45 @@
+{
+  "cenario": 3,
+  "cena": 1,
+  "titulo": "Terceira Guerra Fernandina",
+  "subtitulo": "No Paço Real — o início da Terceira Guerra",
+  "data": "1381",
+  "local": "No Paço Real",
+  "narrador": "Em 1381, D. Fernando decidiu voltar a declarar guerra a Castela, agora governada por Juan I, filho de Henrique II. Apesar das duas guerras anteriores, o rei português continuava a procurar enfraquecer o poder castelhano.",
+  "dialogos": {
+    "rei": [
+      { "quem": "escudeiro", "texto": "Majestade, vamos entrar novamente em guerra com Castela?" },
+      { "quem": "fernando", "texto": "Sim! Voltaremos a combater Castela. Desta vez contamos com o apoio de Inglaterra." },
+      { "quem": "conselheiro", "texto": "Majestade, já sofremos muito com as guerras anteriores. Não será prudente evitar outro conflito?" },
+      { "quem": "fernando", "texto": "Sei dos riscos, mas os ingleses são inimigos de Castela e poderão ajudar-nos a enfrentar o seu exército." },
+      { "quem": "fernando", "texto": "Escudeiro, o pergaminho da aliança inglesa está na mesa de guerra. Leva-o ao comandante militar, à entrada do paço.", "adicionada": true }
+    ],
+    "rei_espera": [
+      { "quem": "fernando", "texto": "O comandante espera pelo pergaminho da aliança inglesa. Vai depressa!", "adicionada": true }
+    ],
+    "conselheiro": [
+      { "quem": "conselheiro", "texto": "Juan I é tão poderoso como o pai. Espero que os ingleses cumpram o que prometem...", "adicionada": true }
+    ],
+    "guarda": [
+      { "quem": "guarda", "texto": "Mais uma guerra com Castela... É a terceira desde que D. Fernando é rei.", "adicionada": true }
+    ],
+    "comandante_espera": [
+      { "quem": "comandante", "texto": "Escudeiro, o rei já decidiu? Traz-me as ordens assim que puderes.", "adicionada": true }
+    ],
+    "comandante": [
+      { "quem": "escudeiro", "texto": "Comandante, aqui está o pergaminho da aliança com Inglaterra. O rei vai declarar guerra a Castela.", "adicionada": true },
+      { "quem": "comandante", "texto": "Então prepararemos as tropas. Com os ingleses do nosso lado, talvez desta vez consigamos enfrentar Juan I.", "adicionada": true }
+    ]
+  },
+  "objetivos": {
+    "falar_rei": "Fala com D. Fernando, no trono.",
+    "mesa": "Recolhe o pergaminho da aliança inglesa na mesa de guerra.",
+    "comandante": "Entrega o pergaminho ao comandante militar, à entrada do paço.",
+    "concluida": "Cena concluída!"
+  },
+  "textos": {
+    "toast_pergaminho": "Recolheste o pergaminho da aliança inglesa",
+    "fim_titulo": "Cena concluída",
+    "fim_texto": "Em 1381, apoiado pela aliança com Inglaterra, D. Fernando iniciou a Terceira Guerra Fernandina contra Juan I de Castela, apesar dos avisos de quem temia mais um conflito."
+  }
+}
