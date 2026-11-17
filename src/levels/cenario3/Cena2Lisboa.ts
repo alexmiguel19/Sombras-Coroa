@@ -3,6 +3,8 @@ import type { Game, Level, Npc } from '../../engine/Game';
 import { castNpc } from '../../world/cast';
 import { castileBanner, stoneFloor, tentCloth } from '../../world/textures';
 import { animateMarker, barrel, boat, crate, house, marker } from '../../world/props';
+import { KIT, kitModel } from '../../world/kit';
+import { banner } from '../../world/props';
 import { escapeHtml } from '../../ui/UI';
 import texto from '../../story/cenario3/cena2.json';
 import type { CenaTexto } from '../../story/types';
@@ -181,6 +183,15 @@ export class Cena2Lisboa implements Level {
 
   /** Navio de guerra castelhano: casco, castelos de proa e popa, mastro e vela com as armas de Castela. */
   private ship(): THREE.Group {
+    const kitShip = kitModel(KIT.ship, { length: 16, alongZ: true });
+    if (kitShip) {
+      kitShip.children[0].position.y -= 1.4; // parte do casco fica dentro de água
+      const flag = banner("castela", 4);
+      flag.scale.setScalar(1.6);
+      flag.position.set(0, 2, -6);
+      kitShip.add(flag);
+      return kitShip;
+    }
     const g = new THREE.Group();
     const wood = new THREE.MeshStandardMaterial({ color: 0x5a3a20, roughness: 0.9, flatShading: true });
     const hull = new THREE.Mesh(new THREE.BoxGeometry(4, 2, 14), wood);
@@ -204,6 +215,11 @@ export class Cena2Lisboa implements Level {
 
   /** Banca de mercado vazia (o comércio parou por causa do bloqueio). */
   private emptyStall(x: number, z: number, stripe: string): THREE.Group {
+    const kitStall = kitModel(stripe === "#3d4a2a" ? KIT.stallGreen : KIT.stallRed, { length: 2.6 });
+    if (kitStall) {
+      kitStall.position.set(x, 0, z);
+      return kitStall;
+    }
     const g = new THREE.Group();
     const wood = new THREE.MeshStandardMaterial({ color: 0x6b4a2a, roughness: 0.9, flatShading: true });
     const table = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.9, 1.2), wood);

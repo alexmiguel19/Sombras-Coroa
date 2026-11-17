@@ -129,4 +129,6 @@ docs/guiao.md    guião original
 |---|---|---|
 | Todas as personagens (`public/models/polypizza/*.glb`: rei, guardas, camponeses, aldeã, conselheiro, escudeiro...) | [Quaternius](https://quaternius.com), via [Poly Pizza](https://poly.pizza) | CC0 1.0 (ver `CREDITOS.txt` na mesma pasta) |
 
-Os cenários (edifícios, adereços, terreno) ainda são feitos com formas simples do Three.js. Se um modelo não carregar, o jogo usa automaticamente a versão simples da personagem.
+| Árvores, caixotes, barris, barcos, navios, bancas, chafariz e fogueiras (`public/models/kenney/`) | [Kenney](https://www.kenney.nl) (Nature, Pirate e Fantasy Town Kit) | CC0 1.0 (ver `CREDITOS.txt` e `LICENSE.txt` na mesma pasta) |
+
+Os edifícios, muralhas e tendas ainda são feitos com formas simples do Three.js. Se um modelo não carregar, o jogo usa automaticamente a versão simples da personagem.

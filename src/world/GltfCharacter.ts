@@ -49,6 +49,11 @@ export function hasModel(url: string): boolean {
   return cache.has(url);
 }
 
+/** Modelo carregado (para adereços estáticos do cenário). */
+export function getModel(url: string): GLTF | undefined {
+  return cache.get(url);
+}
+
 /**
  * Personagem a partir de um modelo glTF com esqueleto e animações (packs Quaternius).
  * Faz a transição suave entre Idle / Walk / Run de acordo com a velocidade.

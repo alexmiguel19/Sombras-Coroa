@@ -166,9 +166,9 @@ export class Cena3Alcoutim implements Level {
       world.addRect(x, z, 0.3, 0.3);
     }
     const c1 = crate();
-    c1.position.set(13.2, 0.4, -12.4);
+    c1.position.set(13.2, 0, -12.4);
     const b1 = barrel();
-    b1.position.set(13.9, 0.45, -11.4);
+    b1.position.set(13.9, 0, -11.4);
     scene.add(c1, b1);
     world.addRect(13.5, -11.9, 1.6, 1.8);
 

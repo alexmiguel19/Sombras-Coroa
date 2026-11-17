@@ -12,6 +12,7 @@ import elvas from './story/cenario3/cena3.json';
 import type { CenaTexto } from './story/types';
 import { preloadModels } from './world/GltfCharacter';
 import { MODELS } from './world/cast';
+import { KIT } from './world/kit';
 
 const canvas = document.getElementById('game') as HTMLCanvasElement;
 const game = new Game(canvas);
@@ -43,7 +44,7 @@ function cenaInicial(): number {
 
 async function start(): Promise<void> {
   // Os modelos 3D carregam enquanto o jogador lê o ecrã inicial.
-  const loading = preloadModels(Object.values(MODELS));
+  const loading = preloadModels([...Object.values(MODELS), ...Object.values(KIT)]);
   await game.ui.card(
     `<h1>Sombras sobre a Coroa</h1>
      <p>És o escudeiro e mensageiro do rei D. Fernando I.</p>

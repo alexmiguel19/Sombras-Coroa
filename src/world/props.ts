@@ -1,10 +1,14 @@
 import * as THREE from 'three';
 import { royalBanner, castileBanner, tentCloth } from './textures';
+import { KIT, kitModel } from './kit';
 
 /**
  * Adereços reutilizáveis entre cenas (exterior medieval).
- * Feitos com formas simples; podem ser trocados por modelos glTF na fase final.
+ * Árvores, caixotes, barris, barcos e fogueiras usam modelos do kit (Kenney, CC0) quando
+ * estão carregados; caso contrário, as formas simples abaixo.
  */
+
+let variant = 0;
 
 const mat = (color: number, rough = 0.85) => new THREE.MeshStandardMaterial({ color, roughness: rough, flatShading: true });
 
@@ -71,15 +75,17 @@ export function banner(kind: 'portugal' | 'castela', height = 3.2): THREE.Group 
 /** Fogueira com luz tremeluzente. Devolve também a luz e a chama para animar. */
 export function campfire(withLight = true): { group: THREE.Group; light: THREE.PointLight | null; flame: THREE.Mesh } {
   const g = new THREE.Group();
+  const kitFire = kitModel(KIT.campfire, { length: 1.3 });
+  if (kitFire) g.add(kitFire);
   const stone = mat(0x6e6a62);
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < (kitFire ? 0 : 8); i++) {
     const a = (i / 8) * Math.PI * 2;
     const s = new THREE.Mesh(new THREE.DodecahedronGeometry(0.16), stone);
     s.position.set(Math.cos(a) * 0.5, 0.08, Math.sin(a) * 0.5);
     g.add(s);
   }
   const wood = mat(0x4a2e14);
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < (kitFire ? 0 : 3); i++) {
     const log = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.8, 5), wood);
     log.rotation.z = Math.PI / 2;
     log.rotation.y = (i / 3) * Math.PI;
@@ -104,6 +110,9 @@ export function campfire(withLight = true): { group: THREE.Group; light: THREE.P
 
 /** Árvore low-poly (pinheiro ou carvalho). */
 export function tree(kind: 'pine' | 'oak', scale = 1): THREE.Group {
+  const urls = kind === 'pine' ? [KIT.pine, KIT.pineRound] : [KIT.oak, KIT.tree];
+  const kitTree = kitModel(urls[variant++ % 2], { height: (kind === 'pine' ? 6 : 5) * scale });
+  if (kitTree) return kitTree;
   const g = new THREE.Group();
   const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.25, 2, 6), mat(0x5a3a1a));
   trunk.position.y = 1;
@@ -148,13 +157,17 @@ export function palisade(length: number): THREE.Group {
 }
 
 /** Caixote / barril de mantimentos. */
-export function crate(): THREE.Mesh {
+export function crate(): THREE.Object3D {
+  const k = kitModel(KIT.crate, { height: 0.8 });
+  if (k) return k;
   const m = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.8, 0.8), mat(0x8a6a3e));
   m.position.y = 0.4;
   return shadows(m);
 }
 
-export function barrel(): THREE.Mesh {
+export function barrel(): THREE.Object3D {
+  const k = kitModel(KIT.barrel, { height: 0.95 });
+  if (k) return k;
   const m = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.3, 0.9, 10), mat(0x7a5530));
   m.position.y = 0.45;
   return shadows(m);
@@ -240,6 +253,8 @@ export function castle(size = 14, wallH = 5, color = 0xb5a88e): THREE.Group {
 
 /** Barco de madeira de fundo chato (travessia do rio). */
 export function boat(): THREE.Group {
+  const k = kitModel(KIT.boat, { length: 4.2, alongZ: true });
+  if (k) return k;
   const g = new THREE.Group();
   const wood = mat(0x6b4a2a);
   const bottom = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.15, 4), wood);

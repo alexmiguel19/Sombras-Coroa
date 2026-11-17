@@ -3,6 +3,7 @@ import type { Game, Level } from '../../engine/Game';
 import { castNpc } from '../../world/cast';
 import { stoneFloor, tentCloth } from '../../world/textures';
 import { animateMarker, banner, barrel, crate, house, marker } from '../../world/props';
+import { KIT, kitModel } from '../../world/kit';
 import { runParchmentChallenge } from '../../ui/ParchmentChallenge';
 import { escapeHtml } from '../../ui/UI';
 import texto from '../../story/cenario2/cena2.json';
@@ -88,7 +89,9 @@ export class Cena2PracaVila implements Level {
     column.position.y = 1.2;
     const bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.3, 0.3, 8), stone);
     bowl.position.y = 2.1;
-    for (const m of [basin, water, column, bowl]) { m.castShadow = m.receiveShadow = true; scene.add(m); }
+    const kitFountain = kitModel(KIT.fountain, { length: 3.6 });
+    if (kitFountain) scene.add(kitFountain);
+    else for (const m of [basin, water, column, bowl]) { m.castShadow = m.receiveShadow = true; scene.add(m); }
     world.addRect(0, 0, 3.4, 3.4);
 
     // ---------- Bancas de mercado ----------
@@ -184,6 +187,12 @@ export class Cena2PracaVila implements Level {
 
   /** Banca de mercado com toldo às riscas. */
   private stall(x: number, z: number, stripe: string): THREE.Group {
+    const kitStall = kitModel(stripe === "#3d4a2a" ? KIT.stallGreen : KIT.stallRed, { length: 2.6 });
+    if (kitStall) {
+      kitStall.position.set(x, 0, z);
+      kitStall.rotation.y = x < 0 ? Math.PI / 2 : -Math.PI / 2;
+      return kitStall;
+    }
     const g = new THREE.Group();
     const wood = new THREE.MeshStandardMaterial({ color: 0x6b4a2a, roughness: 0.9, flatShading: true });
     const table = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.9, 1.2), wood);
