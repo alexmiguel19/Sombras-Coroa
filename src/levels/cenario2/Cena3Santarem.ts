@@ -8,7 +8,7 @@ import { escapeHtml } from '../../ui/UI';
 import texto from '../../story/cenario2/cena3.json';
 import type { CenaTexto } from '../../story/types';
 
-const T = texto as CenaTexto;
+const SANTAREM = texto as CenaTexto;
 
 const SIZE = 36; // pátio do castelo de Santarém
 const H = SIZE / 2;
@@ -19,8 +19,16 @@ const TABLE_POS = new THREE.Vector3(-9, 0, 8);
 /**
  * 2.º Cenário · Cena 3 — Em Santarém (1373).
  * Missões: falar com o rei → buscar o pergaminho ao escrivão → identificar as condições da Paz de Santarém → entregá-lo ao rei.
+ *
+ * O mesmo cenário (pátio de castelo) serve outras cenas de tratado com textos diferentes
+ * (ex.: Elvas, 1382): basta passar outro JSON e indicar se há fumo de guerra ao longe.
  */
 export class Cena3Santarem implements Level {
+  constructor(
+    protected T: CenaTexto = SANTAREM,
+    private withSmoke = true,
+  ) {}
+
   private time = 0;
   private marker!: THREE.Mesh;
   private markerY = 2.5;
@@ -109,7 +117,7 @@ export class Cena3Santarem implements Level {
 
     // ---------- Fumo de Lisboa, ao longe (sudoeste) ----------
     const smokeMat = new THREE.MeshStandardMaterial({ color: 0x3a3632, roughness: 1, transparent: true, opacity: 0.55, flatShading: true });
-    for (let col = 0; col < 3; col++) {
+    for (let col = 0; col < (this.withSmoke ? 3 : 0); col++) {
       for (let i = 0; i < 7; i++) {
         const s = new THREE.Mesh(new THREE.IcosahedronGeometry(3 + i * 0.9, 0), smokeMat);
         s.position.set(-50 + col * 9, 4 + i * 5, 70 + col * 6);
@@ -131,7 +139,7 @@ export class Cena3Santarem implements Level {
     game.addInteractable({ id: 'rei', label: 'Falar com D. Fernando', position: new THREE.Vector3(KING_POS.x, 0, KING_POS.z + 1.6), radius: 2.4 });
     game.addInteractable({
       id: 'conselheiro', label: 'Falar com o Conselheiro', position: ADVISOR_POS.clone(), radius: 1.8,
-      onInteract: () => game.talk(T.dialogos.conselheiro),
+      onInteract: () => game.talk(this.T.dialogos.conselheiro),
     });
     game.addInteractable({ id: 'mesa', label: 'Falar com o escrivão', position: new THREE.Vector3(TABLE_POS.x, 0, TABLE_POS.z + 1.2), radius: 2.0, enabled: false });
 
@@ -147,53 +155,53 @@ export class Cena3Santarem implements Level {
     ui.showHud(false);
     await game.busyWith(() =>
       ui.card(
-        `<div class="date">${escapeHtml(`2.º Cenário · ${T.data}`)}</div>
-         <h1>${escapeHtml(T.local)}</h1>
-         <p class="small">${escapeHtml(T.subtitulo)}</p>
-         <p class="quote"><strong>Narrador:</strong> ${escapeHtml(T.narrador)}</p>`,
+        `<div class="date">${escapeHtml(`${this.T.cenario}.º Cenário · ${this.T.data}`)}</div>
+         <h1>${escapeHtml(this.T.local)}</h1>
+         <p class="small">${escapeHtml(this.T.subtitulo)}</p>
+         <p class="quote"><strong>Narrador:</strong> ${escapeHtml(this.T.narrador)}</p>`,
         'Entrar no castelo',
       ),
     );
     ui.showHud(true);
 
     // 1) Falar com o rei
-    ui.setObjective(T.objetivos.falar_rei);
+    ui.setObjective(this.T.objetivos.falar_rei);
     await game.waitFor('rei');
-    await game.talk(T.dialogos.rei);
+    await game.talk(this.T.dialogos.rei);
 
     // 2) Buscar o pergaminho ao escrivão e ler as condições
     const rei = game.interactables.find((i) => i.id === 'rei')!;
-    rei.onInteract = () => game.talk(T.dialogos.rei_espera);
+    rei.onInteract = () => game.talk(this.T.dialogos.rei_espera);
     const mesa = game.interactables.find((i) => i.id === 'mesa')!;
     mesa.enabled = true;
     this.marker.position.set(TABLE_POS.x, 0, TABLE_POS.z);
     this.markerY = 1.9;
-    ui.setObjective(T.objetivos.pergaminho);
+    ui.setObjective(this.T.objetivos.pergaminho);
     await game.waitFor('mesa');
-    await game.talk(T.dialogos.escrivao);
+    await game.talk(this.T.dialogos.escrivao);
     const pickUp = game.player.character.playOnce;
     if (pickUp) await game.busyWith(() => pickUp.call(game.player.character, 'PickUp'));
     this.scroll.visible = false;
-    ui.toast(T.textos.toast_pergaminho);
-    await game.busyWith(() => runParchmentChallenge(ui.overlayElement, T.desafio!));
-    mesa.onInteract = () => game.talk(T.dialogos.escrivao_depois);
+    ui.toast(this.T.textos.toast_pergaminho);
+    await game.busyWith(() => runParchmentChallenge(ui.overlayElement, this.T.desafio!));
+    mesa.onInteract = () => game.talk(this.T.dialogos.escrivao_depois);
 
     // 3) Entregar ao rei
     rei.onInteract = undefined;
     this.marker.position.set(KING_POS.x, 0, KING_POS.z);
     this.markerY = 2.5;
-    ui.setObjective(T.objetivos.entregar);
+    ui.setObjective(this.T.objetivos.entregar);
     await game.waitFor('rei');
     this.marker.visible = false;
-    await game.talk(T.dialogos.entrega);
+    await game.talk(this.T.dialogos.entrega);
 
-    ui.setObjective(T.objetivos.concluida);
+    ui.setObjective(this.T.objetivos.concluida);
     await game.busyWith(() =>
       ui.card(
-        `<div class="date">${escapeHtml(T.textos.fim_data)}</div>
-         <h2>${escapeHtml(T.textos.fim_titulo)}</h2>
-         <p>${escapeHtml(T.textos.fim_texto)}</p>
-         <p class="quote">${escapeHtml(T.textos.fim_citacao)}</p>`,
+        `<div class="date">${escapeHtml(this.T.textos.fim_data)}</div>
+         <h2>${escapeHtml(this.T.textos.fim_titulo)}</h2>
+         <p>${escapeHtml(this.T.textos.fim_texto)}</p>
+         <p class="quote">${escapeHtml(this.T.textos.fim_citacao)}</p>`,
         'Continuar',
       ),
     );

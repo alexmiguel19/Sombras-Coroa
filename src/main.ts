@@ -7,6 +7,8 @@ import { Cena2PracaVila } from './levels/cenario2/Cena2PracaVila';
 import { Cena3Santarem } from './levels/cenario2/Cena3Santarem';
 import { Cena1PacoReal1381 } from './levels/cenario3/Cena1PacoReal1381';
 import { Cena2Lisboa } from './levels/cenario3/Cena2Lisboa';
+import elvas from './story/cenario3/cena3.json';
+import type { CenaTexto } from './story/types';
 import { preloadModels } from './world/GltfCharacter';
 import { MODELS } from './world/cast';
 
@@ -25,6 +27,7 @@ const CENAS: { nome: string; criar: () => Level }[] = [
   { nome: 'Em Santarém (1373)', criar: () => new Cena3Santarem() },
   { nome: 'No Paço Real (1381)', criar: () => new Cena1PacoReal1381() },
   { nome: 'Em Lisboa (1381–1382)', criar: () => new Cena2Lisboa() },
+  { nome: 'Em Elvas (1382)', criar: () => new Cena3Santarem(elvas as CenaTexto, false) },
 ];
 
 /**
@@ -56,7 +59,7 @@ async function start(): Promise<void> {
   // As cenas seguintes ainda estão em desenvolvimento.
   await game.ui.card(
     `<h2>Continua em breve…</h2>
-     <p>A seguir: <strong>Em Elvas (1382)</strong> — o fim da Terceira Guerra.</p>`,
+     <p>A seguir: <strong>Epílogo — Salvaterra de Magos (1383)</strong>.</p>`,
     'Recomeçar',
   );
   location.href = location.pathname;

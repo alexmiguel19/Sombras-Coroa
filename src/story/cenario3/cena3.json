@@ -1,0 +1,62 @@
+{
+  "cenario": 3,
+  "cena": 3,
+  "titulo": "Terceira Guerra Fernandina",
+  "subtitulo": "Em Elvas — o fim da Terceira Guerra",
+  "data": "1382",
+  "local": "Em Elvas",
+  "narrador": "O conflito prolongou-se sem uma vitória decisiva. Em agosto de 1382, Portugal e Castela chegaram a um acordo de paz em Elvas.",
+  "dialogos": {
+    "rei": [
+      { "quem": "escudeiro", "texto": "Majestade, a guerra vai finalmente terminar?" },
+      { "quem": "fernando", "texto": "Sim. Vamos restabelecer a paz com Juan I de Castela e terminar as hostilidades." },
+      { "quem": "conselheiro", "texto": "O acordo prevê também o casamento da infanta D. Beatriz, vossa filha, com o infante D. Fernando, filho do rei castelhano." },
+      { "quem": "escudeiro", "texto": "Outra vez um casamento para garantir a paz?" },
+      { "quem": "fernando", "texto": "Os casamentos entre famílias reais são importantes para fortalecer os acordos entre os reinos." },
+      { "quem": "fernando", "texto": "O escrivão tem o pergaminho com as condições da paz. Vai buscá-lo e traz-mo.", "adicionada": true }
+    ],
+    "rei_espera": [
+      { "quem": "fernando", "texto": "Traz-me o pergaminho que está na mesa do escrivão.", "adicionada": true }
+    ],
+    "conselheiro": [
+      { "quem": "conselheiro", "texto": "Três guerras com Castela, Majestade... e nenhuma vitória decisiva. Que esta paz seja a última.", "adicionada": true }
+    ],
+    "escrivao": [
+      { "quem": "escrivao", "texto": "Aqui está o pergaminho da Paz de Elvas, escudeiro. Lê com atenção o que diz sobre a infanta D. Beatriz.", "adicionada": true }
+    ],
+    "escrivao_depois": [
+      { "quem": "escrivao", "texto": "O rei espera pelo pergaminho, escudeiro.", "adicionada": true }
+    ],
+    "entrega": [
+      { "quem": "escudeiro", "texto": "Majestade, aqui estão as condições da Paz de Elvas.", "adicionada": true },
+      { "quem": "fernando", "texto": "Termina a guerra, e a minha filha Beatriz casará com o filho de Juan I. Que esta paz dure.", "adicionada": true }
+    ]
+  },
+  "objetivos": {
+    "falar_rei": "Fala com D. Fernando, junto à torre de menagem.",
+    "pergaminho": "Vai buscar o pergaminho à mesa do escrivão.",
+    "entregar": "Entrega ao rei o pergaminho com as condições da Paz de Elvas.",
+    "concluida": "Cena concluída!"
+  },
+  "textos": {
+    "toast_pergaminho": "Recebeste o pergaminho da Paz de Elvas",
+    "fim_data": "1382 · A Paz de Elvas",
+    "fim_titulo": "Cena concluída",
+    "fim_texto": "A Paz de Elvas pôs fim à Terceira Guerra Fernandina. Para reforçar o acordo, ficou combinado o casamento da infanta D. Beatriz, herdeira de Portugal, com o infante D. Fernando, filho de Juan I de Castela.",
+    "fim_citacao": "Mas, no ano seguinte, a morte da rainha de Castela iria mudar estes planos..."
+  },
+  "desafio": {
+    "titulo": "A Paz de Elvas",
+    "cabecalho": "Tratado de paz entre D. Fernando, rei de Portugal, e Juan I, rei de Castela. Elvas, agosto de 1382.",
+    "instrucao": "Lê o pergaminho e escolhe as duas condições deste acordo.",
+    "opcoes": [
+      { "texto": "Termina a guerra entre Portugal e Castela.", "certa": true },
+      { "texto": "D. Beatriz casará com o próprio rei Juan I de Castela.", "certa": false, "explicacao": "Ainda não! Em Elvas ficou combinado o casamento com o infante D. Fernando, filho de Juan I. Isso só mudará em 1383." },
+      { "texto": "A infanta D. Beatriz casará com o infante D. Fernando, filho de Juan I.", "certa": true },
+      { "texto": "Portugal passa a ser governado pelo rei de Castela.", "certa": false, "explicacao": "Não. Portugal e Castela continuavam a ser reinos separados." },
+      { "texto": "D. Fernando casa com Leonor, filha de Henrique II.", "certa": false, "explicacao": "Essa promessa era do Tratado de Alcoutim (1371), e D. Fernando não a cumpriu." }
+    ],
+    "certo": "Exato! A Paz de Elvas terminou a guerra e combinou o casamento de D. Beatriz com o infante D. Fernando de Castela.",
+    "botao": "Levar o pergaminho ao rei"
+  }
+}
