@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import type { Game, Level, Npc } from '../../engine/Game';
-import { Character } from '../../world/Character';
+import { castNpc } from '../../world/cast';
 import { dirt, grass, stoneWall } from '../../world/textures';
 import { animateMarker, banner, barrel, crate, house, marker, tree } from '../../world/props';
 import { escapeHtml } from '../../ui/UI';
@@ -155,9 +155,9 @@ export class Cena1PortasVila implements Level {
 
     // ---------- Personagens ----------
     const guardLook = { tunic: 0x6b6b6b, legs: 0x3a3a3a, helmet: true, spear: true, cross: 0xb01e1e };
-    game.addNpc('guarda', new Character(guardLook), -2.6, 0, WALL_Z + 2, 0.3);
-    game.addNpc('campones', new Character({ tunic: 0x8a6a3a, legs: 0x4a3a2a, hat: 0x9a8040, hair: 0x4a3020 }), 2.8, 0, WALL_Z + 3.5, -0.4);
-    const captain = game.addNpc('guarda', new Character({ ...guardLook, tunic: 0x4a4a52, cape: 0x8c1c1c }), TOWER_X, 0, WALL_Z + 2.6, 0);
+    game.addNpc('guarda', castNpc(guardLook), -2.6, 0, WALL_Z + 2, 0.3);
+    game.addNpc('campones', castNpc({ tunic: 0x8a6a3a, legs: 0x4a3a2a, hat: 0x9a8040, hair: 0x4a3020 }), 2.8, 0, WALL_Z + 3.5, -0.4);
+    const captain = game.addNpc('guarda', castNpc({ ...guardLook, tunic: 0x4a4a52, cape: 0x8c1c1c }), TOWER_X, 0, WALL_Z + 2.6, 0);
 
     const peasantDefs: [number, number, string, number][] = [
       [-13, 4.5, 'campones1', 0x7a5a30],
@@ -165,7 +165,7 @@ export class Cena1PortasVila implements Level {
       [-6, 17.5, 'campones3', 0xa04a4a],
     ];
     for (const [x, z, dialog, tunic] of peasantDefs) {
-      const npc = game.addNpc('campones', new Character({ tunic, legs: 0x4a3a2a, hat: dialog === 'campones3' ? undefined : 0x9a8040, hair: 0x4a3020 }), x, 0, z, Math.PI);
+      const npc = game.addNpc('campones', castNpc({ tunic, legs: 0x4a3a2a, hat: dialog === 'campones3' ? undefined : 0x9a8040, hair: 0x4a3020 }), x, 0, z, Math.PI);
       const m = marker();
       m.position.set(x, 2.7, z);
       m.visible = false;

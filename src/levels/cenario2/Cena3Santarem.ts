@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import type { Game, Level } from '../../engine/Game';
-import { Character } from '../../world/Character';
+import { castNpc } from '../../world/cast';
 import { dirt, stoneFloor } from '../../world/textures';
 import { animateMarker, banner, barrel, castle, crate, marker } from '../../world/props';
 import { runParchmentChallenge } from '../../ui/ParchmentChallenge';
@@ -129,11 +129,11 @@ export class Cena3Santarem implements Level {
     }
 
     // ---------- Personagens ----------
-    game.addNpc('fernando', new Character({ tunic: 0x8c1c1c, legs: 0x3a1010, cape: 0x1f3c8c, crown: true, beard: 0x5a3a1a, hair: 0x5a3a1a }), KING_POS.x, 0, KING_POS.z, 0);
-    game.addNpc('conselheiro', new Character({ tunic: 0x3d4a2a, legs: 0x2a2a20, hat: 0x2a1f14, beard: 0xb8b0a0, hair: 0xb8b0a0 }), ADVISOR_POS.x, 0, ADVISOR_POS.z, -0.4);
-    game.addNpc('escrivao', new Character({ tunic: 0x4a3a5a, legs: 0x2a2030, hat: 0x1a1a1a, hair: 0x3a2a1a }), TABLE_POS.x, 0, TABLE_POS.z - 1.2, 0);
+    game.addNpc('fernando', castNpc({ tunic: 0x8c1c1c, legs: 0x3a1010, cape: 0x1f3c8c, crown: true, beard: 0x5a3a1a, hair: 0x5a3a1a }), KING_POS.x, 0, KING_POS.z, 0);
+    game.addNpc('conselheiro', castNpc({ tunic: 0x3d4a2a, legs: 0x2a2a20, hat: 0x2a1f14, beard: 0xb8b0a0, hair: 0xb8b0a0 }), ADVISOR_POS.x, 0, ADVISOR_POS.z, -0.4);
+    game.addNpc('escrivao', castNpc({ tunic: 0x4a3a5a, legs: 0x2a2030, hat: 0x1a1a1a, hair: 0x3a2a1a }), TABLE_POS.x, 0, TABLE_POS.z - 1.2, 0);
     for (const [x, z, r] of [[-H + 3, 12, 1.6], [H - 3, -4, -1.6], [-5, -12, 0]] as const) {
-      game.addNpc('guarda', new Character({ tunic: 0x6b6b6b, legs: 0x3a3a3a, helmet: true, spear: true, cross: 0xb01e1e }), x, 0, z, r, false);
+      game.addNpc('guarda', castNpc({ tunic: 0x6b6b6b, legs: 0x3a3a3a, helmet: true, spear: true, cross: 0xb01e1e }), x, 0, z, r, false);
     }
 
     game.addInteractable({ id: 'rei', label: 'Falar com D. Fernando', position: new THREE.Vector3(KING_POS.x, 0, KING_POS.z + 1.6), radius: 2.4 });

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import type { Game } from '../../engine/Game';
 import { Cena1PacoReal } from '../cenario1/Cena1PacoReal';
-import { Character } from '../../world/Character';
+import { castNpc } from '../../world/cast';
 import { animateMarker, marker } from '../../world/props';
 import { escapeHtml } from '../../ui/UI';
 import texto from '../../story/cenario3/cena1.json';
@@ -31,7 +31,7 @@ export class Cena1PacoReal1381 extends Cena1PacoReal {
       if (it.id === 'guarda') it.onInteract = () => game.talk(T.dialogos.guarda);
       if (it.id === 'mesa') it.label = 'Recolher o pergaminho';
     }
-    game.addNpc('comandante', new Character({ tunic: 0x4a4a52, legs: 0x2a2a2a, helmet: true, cape: 0x8c1c1c, cross: 0xb01e1e, beard: 0x3a2a1a }), COMMANDER.x, 0, COMMANDER.z, Math.PI / 2);
+    game.addNpc('comandante', castNpc({ tunic: 0x4a4a52, legs: 0x2a2a2a, helmet: true, cape: 0x8c1c1c, cross: 0xb01e1e, beard: 0x3a2a1a }), COMMANDER.x, 0, COMMANDER.z, Math.PI / 2);
     game.addInteractable({
       id: 'comandante', label: 'Falar com o comandante', position: COMMANDER.clone(), radius: 2.2,
       onInteract: () => game.talk(T.dialogos.comandante_espera),

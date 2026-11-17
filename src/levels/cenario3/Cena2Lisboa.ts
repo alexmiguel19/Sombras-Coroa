@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import type { Game, Level, Npc } from '../../engine/Game';
-import { Character } from '../../world/Character';
+import { castNpc } from '../../world/cast';
 import { castileBanner, stoneFloor, tentCloth } from '../../world/textures';
 import { animateMarker, barrel, boat, crate, house, marker } from '../../world/props';
 import { escapeHtml } from '../../ui/UI';
@@ -98,16 +98,16 @@ export class Cena2Lisboa implements Level {
     }
 
     // ---------- Personagens ----------
-    const merchant = game.addNpc('mercador', new Character({ tunic: 0x7a3a5a, legs: 0x3a2a2a, hat: 0x5a3a20, beard: 0x5a4a3a, hair: 0x5a4a3a }), MERCHANT.x, 0, MERCHANT.z, Math.PI);
-    const guard = game.addNpc('guarda', new Character({ tunic: 0x6b6b6b, legs: 0x3a3a3a, helmet: true, spear: true, cross: 0xb01e1e }), GUARD.x, 0, GUARD.z, Math.PI);
-    game.addNpc('campones', new Character({ tunic: 0x5a6a7a, legs: 0x3a3a3a, hat: 0x9a8040, hair: 0x4a3020 }), -15, 0, -10, Math.PI);
+    const merchant = game.addNpc('mercador', castNpc({ tunic: 0x7a3a5a, legs: 0x3a2a2a, hat: 0x5a3a20, beard: 0x5a4a3a, hair: 0x5a4a3a }), MERCHANT.x, 0, MERCHANT.z, Math.PI);
+    const guard = game.addNpc('guarda', castNpc({ tunic: 0x6b6b6b, legs: 0x3a3a3a, helmet: true, spear: true, cross: 0xb01e1e }), GUARD.x, 0, GUARD.z, Math.PI);
+    game.addNpc('campones', castNpc({ tunic: 0x5a6a7a, legs: 0x3a3a3a, hat: 0x9a8040, hair: 0x4a3020 }), -15, 0, -10, Math.PI);
     game.addInteractable({
       id: 'pescador', label: 'Falar com o pescador', position: new THREE.Vector3(-15, 0, -10), radius: 1.8,
       onInteract: () => game.talk(T.dialogos.pescador),
     });
     // Soldados ingleses (cruz de São Jorge) à porta de uma taberna
     for (const [x, z, r] of [[15, 6, -2.6], [17, 6.4, 2.8]] as const) {
-      game.addNpc('soldado', new Character({ tunic: 0xeeeae0, legs: 0x3a3a50, cross: 0xc01818, helmet: true, spear: true }), x, 0, z, r, false);
+      game.addNpc('soldado', castNpc({ tunic: 0xeeeae0, legs: 0x3a3a50, cross: 0xc01818, helmet: true, spear: true }), x, 0, z, r, false);
     }
 
     for (const npc of [merchant, guard]) {

@@ -1,0 +1,7 @@
+Modelos 3D de personagens — autor: Quaternius (https://quaternius.com)
+Licença: CC0 1.0 Universal (domínio público). Obtidos em https://poly.pizza
+- King.glb        https://poly.pizza/m/I1gTjmuK2m
+- Farmer.glb      https://poly.pizza/m/7pn3R6hPvE
+- Adventurer1.glb https://poly.pizza/m/5EGWBMpuXq
+- Adventurer2.glb https://poly.pizza/m/ZwF0K7WBmu
+- WomanDress.glb  https://poly.pizza/m/zMyPlQXBzq

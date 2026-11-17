@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import type { Game, Level, Npc } from '../../engine/Game';
-import { Character } from '../../world/Character';
+import { castNpc } from '../../world/cast';
 import { dirt, grass } from '../../world/textures';
 import { animateMarker, banner, barrel, campfire, crate, marker, palisade, spearRack, tent, tree } from '../../world/props';
 import { escapeHtml } from '../../ui/UI';
@@ -183,8 +183,8 @@ export class Cena2Galiza implements Level {
 
     // ---------- Personagens ----------
     const soldierLook = (tunic: number) => ({ tunic, legs: 0x3a3a3a, helmet: true, spear: true, cross: 0xb01e1e });
-    game.addNpc('soldado', new Character(soldierLook(0x7a7a72)), -2.4, 0, 8, 0);
-    game.addNpc('conselheiro', new Character({ tunic: 0x3d4a2a, legs: 0x2a2a20, hat: 0x2a1f14, beard: 0xb8b0a0, hair: 0xb8b0a0 }), 2.4, 0, 7.6, -0.3);
+    game.addNpc('soldado', castNpc(soldierLook(0x7a7a72)), -2.4, 0, 8, 0);
+    game.addNpc('conselheiro', castNpc({ tunic: 0x3d4a2a, legs: 0x2a2a20, hat: 0x2a1f14, beard: 0xb8b0a0, hair: 0xb8b0a0 }), 2.4, 0, 7.6, -0.3);
 
     const guardDefs: [number, number, number, string][] = [
       [-9, 0.6, 2.8, 'soldado1'], // junto à fogueira oeste
@@ -192,7 +192,7 @@ export class Cena2Galiza implements Level {
       [-12.5, -16, 0.2, 'soldado3'], // de vigia junto às lanças, a norte
     ];
     guardDefs.forEach(([x, z, rot, dialog], i) => {
-      const npc = game.addNpc('soldado', new Character(soldierLook([0x6b6b6b, 0x5d6b4a, 0x7a5a3a][i])), x, 0, z, rot);
+      const npc = game.addNpc('soldado', castNpc(soldierLook([0x6b6b6b, 0x5d6b4a, 0x7a5a3a][i])), x, 0, z, rot);
       const m = marker();
       m.position.set(x, 2.7, z);
       m.visible = false;

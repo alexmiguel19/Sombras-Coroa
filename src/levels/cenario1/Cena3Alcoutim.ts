@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import type { Game, Level } from '../../engine/Game';
-import { Character } from '../../world/Character';
+import { castNpc } from '../../world/cast';
 import { dirt, grass, tentCloth } from '../../world/textures';
 import { animateMarker, banner, barrel, boat, castle, crate, house, marker, tree } from '../../world/props';
 import { runParchmentChallenge } from '../../ui/ParchmentChallenge';
@@ -252,13 +252,13 @@ export class Cena3Alcoutim implements Level {
     }
 
     // ---------- Personagens ----------
-    const fernando = new Character({ tunic: 0x8c1c1c, legs: 0x3a1010, cape: 0x1f3c8c, crown: true, beard: 0x5a3a1a, hair: 0x5a3a1a });
+    const fernando = castNpc({ tunic: 0x8c1c1c, legs: 0x3a1010, cape: 0x1f3c8c, crown: true, beard: 0x5a3a1a, hair: 0x5a3a1a });
     game.addNpc('fernando', fernando, KING_POS.x, KING_POS.y, KING_POS.z, 0);
-    game.addNpc('conselheiro', new Character({ tunic: 0x3d4a2a, legs: 0x2a2a20, hat: 0x2a1f14, beard: 0xb8b0a0, hair: 0xb8b0a0 }), ADVISOR_POS.x, 0, ADVISOR_POS.z, -0.5);
-    game.addNpc('escrivao', new Character({ tunic: 0x4a3a5a, legs: 0x2a2030, hat: 0x1a1a1a, hair: 0x3a2a1a }), SCRIBE_POS.x, 0, SCRIBE_POS.z, 0);
-    game.addNpc('castelhano', new Character({ tunic: 0x7a1414, legs: 0x3a1a10, cape: 0xc9a227, hat: 0x5a1010, beard: 0x2a1a10, hair: 0x2a1a10 }), ENVOY_POS.x, 0, ENVOY_POS.z, -0.6);
+    game.addNpc('conselheiro', castNpc({ tunic: 0x3d4a2a, legs: 0x2a2a20, hat: 0x2a1f14, beard: 0xb8b0a0, hair: 0xb8b0a0 }), ADVISOR_POS.x, 0, ADVISOR_POS.z, -0.5);
+    game.addNpc('escrivao', castNpc({ tunic: 0x4a3a5a, legs: 0x2a2030, hat: 0x1a1a1a, hair: 0x3a2a1a }), SCRIBE_POS.x, 0, SCRIBE_POS.z, 0);
+    game.addNpc('castelhano', castNpc({ tunic: 0x7a1414, legs: 0x3a1a10, cape: 0xc9a227, hat: 0x5a1010, beard: 0x2a1a10, hair: 0x2a1a10 }), ENVOY_POS.x, 0, ENVOY_POS.z, -0.6);
     for (const x of [-4.2, 4.2]) {
-      const guard = new Character({ tunic: 0x6b6b6b, legs: 0x3a3a3a, helmet: true, spear: true, cross: 0xb01e1e });
+      const guard = castNpc({ tunic: 0x6b6b6b, legs: 0x3a3a3a, helmet: true, spear: true, cross: 0xb01e1e });
       game.addNpc('guarda', guard, PAVILION.x + x, 0, PAVILION.z + 4.2, 0, false);
     }
 

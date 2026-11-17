@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import type { Game, Level } from '../../engine/Game';
-import { Character } from '../../world/Character';
+import { castNpc } from '../../world/cast';
 import { stoneFloor, tentCloth } from '../../world/textures';
 import { animateMarker, banner, barrel, crate, house, marker } from '../../world/props';
 import { runParchmentChallenge } from '../../ui/ParchmentChallenge';
@@ -106,14 +106,14 @@ export class Cena2PracaVila implements Level {
 
     // ---------- Personagens ----------
     // Mensageiro inglês: túnica branca com a cruz vermelha de São Jorge.
-    game.addNpc('mensageiro', new Character({ tunic: 0xeeeae0, legs: 0x3a3a50, cross: 0xc01818, cape: 0x2a3a6a, hat: 0x2a2a3a, hair: 0xc89a50 }), MESSENGER.x, 0, MESSENGER.z, -0.8);
-    game.addNpc('comandante', new Character({ tunic: 0x4a4a52, legs: 0x2a2a2a, helmet: true, cape: 0x8c1c1c, cross: 0xb01e1e, beard: 0x3a2a1a }), COMMANDER.x, 0, COMMANDER.z, 0);
+    game.addNpc('mensageiro', castNpc({ tunic: 0xeeeae0, legs: 0x3a3a50, cross: 0xc01818, cape: 0x2a3a6a, hat: 0x2a2a3a, hair: 0xc89a50 }), MESSENGER.x, 0, MESSENGER.z, -0.8);
+    game.addNpc('comandante', castNpc({ tunic: 0x4a4a52, legs: 0x2a2a2a, helmet: true, cape: 0x8c1c1c, cross: 0xb01e1e, beard: 0x3a2a1a }), COMMANDER.x, 0, COMMANDER.z, 0);
     for (const x of [-2.2, 2.2]) {
-      game.addNpc('guarda', new Character({ tunic: 0x6b6b6b, legs: 0x3a3a3a, helmet: true, spear: true, cross: 0xb01e1e }), x, 0, COMMANDER.z - 0.6, 0, false);
+      game.addNpc('guarda', castNpc({ tunic: 0x6b6b6b, legs: 0x3a3a3a, helmet: true, spear: true, cross: 0xb01e1e }), x, 0, COMMANDER.z - 0.6, 0, false);
     }
     const folk: [number, number, number, number][] = [[-7.5, -3.2, 0x8a6a3a, 1.4], [-6.8, 5.5, 0xa04a4a, 2.2], [8.4, 4, 0x5d6b4a, -1.6], [3, 7, 0x7a5a30, 2.8]];
     for (const [x, z, tunic, rot] of folk) {
-      game.addNpc('campones', new Character({ tunic, legs: 0x4a3a2a, hat: 0x9a8040, hair: 0x4a3020 }), x, 0, z, rot);
+      game.addNpc('campones', castNpc({ tunic, legs: 0x4a3a2a, hat: 0x9a8040, hair: 0x4a3020 }), x, 0, z, rot);
       game.addInteractable({
         id: 'aldeao', label: 'Falar com o aldeão', position: new THREE.Vector3(x, 0, z), radius: 1.8,
         onInteract: () => game.talk(T.dialogos.aldeao, { campones: game.npcs.find((n) => n.character.root.position.x === x) }),

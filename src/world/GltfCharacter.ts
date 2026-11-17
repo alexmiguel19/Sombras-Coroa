@@ -14,7 +14,17 @@ const RUN_NATURAL = 5.2;
 export interface GltfLook {
   /** Recolorir materiais pelo nome (cores em sRGB, ex.: 0x8c1c1c). */
   colors?: Record<string, number>;
+  /** Esconder as partes do modelo com estes materiais (ex.: a coroa do rei nos guardas). */
+  hide?: string[];
 }
+
+/** Nome "limpo" de uma animação: "CharacterArmature|Walk" ou "Female_Walk" passam a "Walk". */
+function clipName(name: string): string {
+  return name.replace(/^.*\|/, '').replace(/^(Female|Man)_/, '');
+}
+
+/** Animações equivalentes entre packs (o pedido da esquerda usa a da direita se faltar). */
+const ALIASES: Record<string, string> = { PickUp: 'Interact' };
 
 /** Modelos já carregados, partilhados entre personagens. */
 const cache = new Map<string, GLTF>();
@@ -69,6 +79,7 @@ export class GltfCharacter implements Avatar {
         const c = (m as THREE.MeshStandardMaterial).clone();
         const hex = look.colors?.[c.name];
         if (hex !== undefined) c.color.setHex(hex);
+        if (look.hide?.includes(c.name)) c.visible = false;
         c.roughness = Math.max(c.roughness, 0.55);
         c.flatShading = true;
         return c;
@@ -77,6 +88,16 @@ export class GltfCharacter implements Avatar {
     });
 
     // Escalar para a altura do jogo e assentar os pés no chão.
+    // A caixa tem de vir da malha já deformada pelos ossos: alguns modelos têm a geometria
+    // em centímetros e a escala (0,01) no esqueleto.
+    model.updateMatrixWorld(true);
+    model.traverse((o) => {
+      const sk = o as THREE.SkinnedMesh;
+      if (sk.isSkinnedMesh) {
+        sk.skeleton.update();
+        sk.computeBoundingBox();
+      }
+    });
     const box = new THREE.Box3().setFromObject(model);
     const s = TARGET_HEIGHT / (box.max.y - box.min.y);
     model.scale.setScalar(s);
@@ -85,7 +106,7 @@ export class GltfCharacter implements Avatar {
 
     this.head = model.getObjectByName('Head') ?? null;
     this.mixer = new THREE.AnimationMixer(model);
-    for (const clip of gltf.animations) this.actions.set(clip.name, this.mixer.clipAction(clip));
+    for (const clip of gltf.animations) this.actions.set(clipName(clip.name), this.mixer.clipAction(clip));
     this.actions.get('Idle')?.play();
   }
 
@@ -128,7 +149,7 @@ export class GltfCharacter implements Avatar {
   }
 
   playOnce(name: string): Promise<void> {
-    const action = this.actions.get(name);
+    const action = this.actions.get(name) ?? this.actions.get(ALIASES[name] ?? '');
     if (!action) return Promise.resolve();
     return new Promise((resolve) => {
       const current = this.actions.get(this.locomotion)!;

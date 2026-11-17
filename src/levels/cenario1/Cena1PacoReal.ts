@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import type { Game, Level } from '../../engine/Game';
-import { Character } from '../../world/Character';
+import { castNpc } from '../../world/cast';
 import { carpet, royalBanner, stoneFloor, stoneWall, tableMap } from '../../world/textures';
 import { runMapChallenge } from '../../ui/MapChallenge';
 import { escapeHtml } from '../../ui/UI';
@@ -143,15 +143,15 @@ export class Cena1PacoReal implements Level {
     world.addRect(TABLE_POS.x, TABLE_POS.z, 2.6, 1.7);
 
     // ---------- Personagens ----------
-    const fernando = new Character({ tunic: 0x8c1c1c, legs: 0x3a1010, cape: 0x1f3c8c, crown: true, beard: 0x5a3a1a, hair: 0x5a3a1a });
+    const fernando = castNpc({ tunic: 0x8c1c1c, legs: 0x3a1010, cape: 0x1f3c8c, crown: true, beard: 0x5a3a1a, hair: 0x5a3a1a });
     game.addNpc('fernando', fernando, KING_POS.x, KING_POS.y, KING_POS.z, 0);
     world.addRect(KING_POS.x, KING_POS.z, 1, 1);
 
-    const conselheiro = new Character({ tunic: 0x3d4a2a, legs: 0x2a2a20, hat: 0x2a1f14, beard: 0xb8b0a0, hair: 0xb8b0a0 });
+    const conselheiro = castNpc({ tunic: 0x3d4a2a, legs: 0x2a2a20, hat: 0x2a1f14, beard: 0xb8b0a0, hair: 0xb8b0a0 });
     game.addNpc('conselheiro', conselheiro, ADVISOR_POS.x, ADVISOR_POS.y, ADVISOR_POS.z, -0.4);
 
-    const guard1 = new Character({ tunic: 0x6b6b6b, legs: 0x3a3a3a, helmet: true, spear: true, cross: 0xb01e1e });
-    const guard2 = new Character({ tunic: 0x6b6b6b, legs: 0x3a3a3a, helmet: true, spear: true, cross: 0xb01e1e });
+    const guard1 = castNpc({ tunic: 0x6b6b6b, legs: 0x3a3a3a, helmet: true, spear: true, cross: 0xb01e1e });
+    const guard2 = castNpc({ tunic: 0x6b6b6b, legs: 0x3a3a3a, helmet: true, spear: true, cross: 0xb01e1e });
     game.addNpc('guarda', guard1, -2.3, 0, 11.2, Math.PI, false);
     game.addNpc('guarda', guard2, 2.3, 0, 11.2, Math.PI, false);
 

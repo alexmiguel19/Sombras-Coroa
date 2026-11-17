@@ -127,6 +127,6 @@ docs/guiao.md    guião original
 
 | Recurso | Autor | Licença |
 |---|---|---|
-| Escudeiro (`public/models/quaternius/Knight_Male.gltf`), do *Ultimate Animated Character Pack* | [Quaternius](https://quaternius.com/packs/ultimatedanimatedcharacter.html) | CC0 1.0 (ver `LICENSE.txt` na mesma pasta) |
+| Todas as personagens (`public/models/polypizza/*.glb`: rei, guardas, camponeses, aldeã, conselheiro, escudeiro...) | [Quaternius](https://quaternius.com), via [Poly Pizza](https://poly.pizza) | CC0 1.0 (ver `CREDITOS.txt` na mesma pasta) |
 
-As restantes personagens e o cenário ainda são feitos com formas simples do Three.js. Se um modelo não carregar, o jogo usa automaticamente a versão simples da personagem.
+Os cenários (edifícios, adereços, terreno) ainda são feitos com formas simples do Three.js. Se um modelo não carregar, o jogo usa automaticamente a versão simples da personagem.
