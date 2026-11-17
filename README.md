@@ -64,7 +64,7 @@ O rei sela o documento e a imagem escurece. A 22 de outubro de 1383, os sinos an
 | 1.º Cenário · Cena 3 — O Tratado de Alcoutim (1371) | ✅ jogável |
 | 2.º Cenário · Cena 1 — Às portas de uma vila (1372) | ✅ jogável |
 | 2.º Cenário · Cena 2 — Na praça da vila (1372) | ✅ jogável |
-| 2.º Cenário · Cena 3 — Em Santarém (1373) | por fazer |
+| 2.º Cenário · Cena 3 — Em Santarém (1373) | ✅ jogável |
 | 3.º Cenário · Cenas 1–3 | por fazer |
 | Epílogo e desafio final | por fazer |
 

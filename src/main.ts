@@ -4,6 +4,7 @@ import { Cena2Galiza } from './levels/cenario1/Cena2Galiza';
 import { Cena3Alcoutim } from './levels/cenario1/Cena3Alcoutim';
 import { Cena1PortasVila } from './levels/cenario2/Cena1PortasVila';
 import { Cena2PracaVila } from './levels/cenario2/Cena2PracaVila';
+import { Cena3Santarem } from './levels/cenario2/Cena3Santarem';
 import { preloadModels } from './world/GltfCharacter';
 import { MODELS } from './world/cast';
 
@@ -19,6 +20,7 @@ const CENAS: { nome: string; criar: () => Level }[] = [
   { nome: 'O Tratado de Alcoutim (1371)', criar: () => new Cena3Alcoutim() },
   { nome: 'Às portas de uma vila (1372)', criar: () => new Cena1PortasVila() },
   { nome: 'Na praça da vila (1372)', criar: () => new Cena2PracaVila() },
+  { nome: 'Em Santarém (1373)', criar: () => new Cena3Santarem() },
 ];
 
 /**
@@ -50,7 +52,7 @@ async function start(): Promise<void> {
   // As cenas seguintes ainda estão em desenvolvimento.
   await game.ui.card(
     `<h2>Continua em breve…</h2>
-     <p>A seguir: <strong>Em Santarém (1373)</strong> — o fim da Segunda Guerra Fernandina.</p>`,
+     <p>A seguir: <strong>3.º Cenário — Terceira Guerra Fernandina (1381–1382)</strong>.</p>`,
     'Recomeçar',
   );
   location.href = location.pathname;

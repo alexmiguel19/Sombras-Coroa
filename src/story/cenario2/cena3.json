@@ -1,0 +1,62 @@
+{
+  "cenario": 2,
+  "cena": 3,
+  "titulo": "Segunda Guerra Fernandina",
+  "subtitulo": "Em Santarém — o fim da Segunda Guerra",
+  "data": "1373",
+  "local": "Em Santarém",
+  "narrador": "Henrique II invadiu Portugal pela Beira, conquistando várias localidades. O seu exército avançou até Lisboa, onde provocou grandes destruições.",
+  "dialogos": {
+    "rei": [
+      { "quem": "escudeiro", "texto": "Majestade! Os castelhanos chegaram a Lisboa e os reforços ingleses não vieram ajudar-nos!" },
+      { "quem": "fernando", "texto": "O nosso exército não consegue enfrentar as forças de Henrique II. Teremos de negociar a paz." },
+      { "quem": "conselheiro", "texto": "O rei de Castela exige que Portugal abandone a aliança com os seus inimigos ingleses." },
+      { "quem": "escudeiro", "texto": "Então voltamos a fazer a paz com Castela?" },
+      { "quem": "fernando", "texto": "Sim. Precisamos de terminar esta guerra, mesmo que isso signifique aceitar condições desfavoráveis." },
+      { "quem": "fernando", "texto": "O escrivão está a terminar de copiar as condições da paz. Vai buscar o pergaminho e traz-mo.", "adicionada": true }
+    ],
+    "rei_espera": [
+      { "quem": "fernando", "texto": "Traz-me o pergaminho que está na mesa do escrivão.", "adicionada": true }
+    ],
+    "conselheiro": [
+      { "quem": "conselheiro", "texto": "Daqui das muralhas de Santarém vê-se o fumo ao longe. Lisboa sofreu muito com esta guerra.", "adicionada": true }
+    ],
+    "escrivao": [
+      { "quem": "escrivao", "texto": "Aqui tens as condições da paz, escudeiro. Não são boas notícias para o nosso reino...", "adicionada": true }
+    ],
+    "escrivao_depois": [
+      { "quem": "escrivao", "texto": "O rei espera pelo pergaminho, escudeiro.", "adicionada": true }
+    ],
+    "entrega": [
+      { "quem": "escudeiro", "texto": "Majestade, aqui estão as condições da Paz de Santarém.", "adicionada": true },
+      { "quem": "fernando", "texto": "Portugal deixa a aliança com João de Gante. É um preço alto, mas o reino precisa de paz.", "adicionada": true }
+    ]
+  },
+  "objetivos": {
+    "falar_rei": "Fala com D. Fernando, junto à torre de menagem.",
+    "pergaminho": "Vai buscar o pergaminho à mesa do escrivão.",
+    "entregar": "Entrega ao rei o pergaminho com as condições da Paz de Santarém.",
+    "concluida": "2.º Cenário concluído!"
+  },
+  "textos": {
+    "toast_pergaminho": "Recebeste o pergaminho da Paz de Santarém",
+    "fim_data": "1373 · A Paz de Santarém",
+    "fim_titulo": "Final do 2.º Cenário",
+    "fim_texto": "A Segunda Guerra Fernandina terminou. D. Fernando não conseguiu derrotar Henrique II e teve de abandonar a aliança com João de Gante. Portugal manteve a independência, mas saiu enfraquecido do conflito.",
+    "fim_citacao": "Apesar das derrotas, D. Fernando não desistiria de intervir nos conflitos de Castela. Alguns anos depois, uma nova guerra estava prestes a começar..."
+  },
+  "desafio": {
+    "titulo": "A Paz de Santarém",
+    "cabecalho": "Tratado de paz entre D. Fernando, rei de Portugal, e Henrique II, rei de Castela. Santarém, 1373.",
+    "instrucao": "Lê o pergaminho e escolhe as duas afirmações verdadeiras sobre esta paz.",
+    "opcoes": [
+      { "texto": "Henrique II renuncia ao trono de Castela.", "certa": false, "explicacao": "Não! Henrique II foi o vencedor desta guerra e continuou rei de Castela." },
+      { "texto": "Portugal abandona a aliança com os ingleses de João de Gante.", "certa": true },
+      { "texto": "Os ingleses ficam com a cidade de Lisboa.", "certa": false, "explicacao": "Os reforços ingleses nem chegaram. Lisboa foi atacada pelos castelhanos, não entregue aos ingleses." },
+      { "texto": "D. Fernando aceita condições desfavoráveis para terminar a guerra.", "certa": true },
+      { "texto": "D. Fernando conquista o trono de Castela.", "certa": false, "explicacao": "D. Fernando perdeu esta guerra: o exército castelhano chegou até Lisboa." }
+    ],
+    "certo": "Exato! Pela Paz de Santarém, D. Fernando teve de abandonar a aliança inglesa e aceitar condições desfavoráveis para pôr fim à guerra.",
+    "botao": "Levar o pergaminho ao rei"
+  }
+}
