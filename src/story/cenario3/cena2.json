@@ -1,0 +1,37 @@
+{
+  "cenario": 3,
+  "cena": 2,
+  "titulo": "Terceira Guerra Fernandina",
+  "subtitulo": "Em Lisboa — o bloqueio do Tejo e os problemas com os aliados",
+  "data": "1381–1382",
+  "local": "Em Lisboa, junto ao Tejo",
+  "narrador": "As tropas inglesas chegaram a Portugal em 1381, mas alguns soldados cometeram roubos e violências contra a população. Em 1382, os navios castelhanos dominaram o Tejo, dificultando a circulação marítima.",
+  "dialogos": {
+    "mercador": [
+      { "quem": "escudeiro", "texto": "Porque estão as bancas vazias? E porque há navios castelhanos no Tejo?" },
+      { "quem": "mercador", "texto": "Os castelhanos controlam o rio e prejudicam o comércio! E alguns soldados ingleses, que vieram ajudar-nos, roubam os nossos bens!" },
+      { "quem": "escudeiro", "texto": "Mas os ingleses não são nossos aliados?" },
+      { "quem": "mercador", "texto": "São, mas nem todos respeitam a população. Estamos a sofrer com esta guerra!" }
+    ],
+    "guarda": [
+      { "quem": "escudeiro", "texto": "Guarda, o que se passa no rio?", "adicionada": true },
+      { "quem": "guarda", "texto": "Os navios de Castela fecharam a entrada do Tejo. Nenhum barco de mercadorias consegue entrar ou sair de Lisboa.", "adicionada": true },
+      { "quem": "guarda", "texto": "E ontem tivemos de prender dois soldados ingleses que assaltaram uma taberna. Os aliados também nos dão trabalho...", "adicionada": true }
+    ],
+    "ja_falou": [
+      { "quem": "escudeiro", "texto": "Já ouvi o que tinha a dizer. Vou procurar mais informações.", "adicionada": true }
+    ],
+    "pescador": [
+      { "quem": "campones", "texto": "Há semanas que não posso sair para pescar. Os navios castelhanos estão por todo o lado!", "adicionada": true }
+    ]
+  },
+  "objetivos": {
+    "info": "Recolhe informações junto de um mercador e de um guarda",
+    "concluida": "Cena concluída!"
+  },
+  "textos": {
+    "toast_info": "Informação recolhida",
+    "fim_titulo": "Cena concluída",
+    "fim_texto": "Em Lisboa, o bloqueio castelhano do Tejo arruinou o comércio, e os abusos de alguns soldados ingleses mostraram que até os aliados podiam fazer sofrer a população."
+  }
+}
