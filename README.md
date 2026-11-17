@@ -44,6 +44,15 @@ docs/guiao.md    guião original
 Os diálogos, objetivos e mensagens de cada cena estão em `src/story/cenarioN/cenaM.json`.
 As falas marcadas com `"adicionada": true` não estão no guião original — foram acrescentadas para ligar a ação e devem ser revistas.
 
+## Recursos gráficos e licenças
+
+| Recurso | Autor | Licença |
+|---|---|---|
+| Escudeiro (`public/models/quaternius/Knight_Male.gltf`), do *Ultimate Animated Character Pack* | [Quaternius](https://quaternius.com/packs/ultimatedanimatedcharacter.html) | CC0 1.0 (ver `LICENSE.txt` na mesma pasta) |
+
+As restantes personagens e o cenário ainda são feitos com formas simples do Three.js.
+Se um modelo não carregar, o jogo usa automaticamente a versão simples da personagem.
+
 ## Estado
 
 | Cena | Estado |

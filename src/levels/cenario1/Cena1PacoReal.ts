@@ -209,6 +209,8 @@ export class Cena1PacoReal implements Level {
     ui.setObjective(T.objetivos.falar_conselheiro);
     await game.waitFor('conselheiro');
     await game.talk(T.dialogos.mensagem);
+    const pickUp = game.player.character.playOnce;
+    if (pickUp) await game.busyWith(() => pickUp.call(game.player.character, 'PickUp'));
     ui.toast(T.textos.toast_mensagem);
 
     // 3) Localizar a Galiza no mapa

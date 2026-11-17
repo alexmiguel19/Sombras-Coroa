@@ -1,5 +1,7 @@
 import { Game } from './engine/Game';
 import { Cena1PacoReal } from './levels/cenario1/Cena1PacoReal';
+import { preloadModels } from './world/GltfCharacter';
+import { MODELS } from './world/cast';
 
 const canvas = document.getElementById('game') as HTMLCanvasElement;
 const game = new Game(canvas);
@@ -7,6 +9,8 @@ const game = new Game(canvas);
 if (import.meta.env.DEV) (window as unknown as { game: Game }).game = game;
 
 async function start(): Promise<void> {
+  // Os modelos 3D carregam enquanto o jogador lê o ecrã inicial.
+  const loading = preloadModels(Object.values(MODELS));
   await game.ui.card(
     `<h1>Sombras sobre a Coroa</h1>
      <p>És o escudeiro e mensageiro do rei D. Fernando I.</p>
@@ -16,6 +20,7 @@ async function start(): Promise<void> {
     'Começar',
   );
 
+  await loading;
   await game.play(new Cena1PacoReal());
 
   // As cenas seguintes ainda estão em desenvolvimento.

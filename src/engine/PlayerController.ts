@@ -1,7 +1,9 @@
 import * as THREE from 'three';
 import type { Input } from './Input';
 import type { CollisionWorld } from './Colliders';
-import { Character, lerpAngle } from '../world/Character';
+import { lerpAngle } from '../world/Character';
+import type { Avatar } from '../world/Avatar';
+import { createSquire } from '../world/cast';
 
 const WALK_SPEED = 3.2;
 const RUN_SPEED = 5.8;
@@ -12,7 +14,7 @@ const RADIUS = 0.38;
  * O movimento é relativo à direção da câmara (W anda "para a frente do ecrã").
  */
 export class PlayerController {
-  readonly character: Character;
+  readonly character: Avatar;
   enabled = true;
 
   // Câmara orbital à volta do jogador
@@ -30,7 +32,7 @@ export class PlayerController {
     private input: Input,
     private world: CollisionWorld,
   ) {
-    this.character = new Character({ tunic: 0x2f5d8a, legs: 0x4a3b2a, cape: 0x7a1f1f, hair: 0x6b3f1d });
+    this.character = createSquire();
   }
 
   get position(): THREE.Vector3 {

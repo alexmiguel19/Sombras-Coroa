@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { Input } from './Input';
 import { CollisionWorld } from './Colliders';
 import { PlayerController } from './PlayerController';
-import { Character } from '../world/Character';
+import type { Avatar } from '../world/Avatar';
 import { UI } from '../ui/UI';
 import type { Fala, QuemFala } from '../story/types';
 
@@ -19,7 +19,7 @@ export interface Interactable {
 
 export interface Npc {
   id: QuemFala;
-  character: Character;
+  character: Avatar;
   /** Vira-se para o escudeiro quando ele se aproxima. */
   watchPlayer: boolean;
   homeRotation: number;
@@ -101,7 +101,7 @@ export class Game {
     });
   }
 
-  addNpc(id: QuemFala, character: Character, x: number, y: number, z: number, rotation: number, watchPlayer = true): Npc {
+  addNpc(id: QuemFala, character: Avatar, x: number, y: number, z: number, rotation: number, watchPlayer = true): Npc {
     character.root.position.set(x, y, z);
     character.root.rotation.y = rotation;
     this.scene.add(character.root);
