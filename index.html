@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sombras sobre a Coroa</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="game"></canvas>
+
+      <!-- HUD: objetivo atual e aviso de interação -->
+      <div id="hud" hidden>
+        <div id="objective"><span class="label">Missão</span><span id="objective-text"></span></div>
+        <div id="controls-hint">WASD / setas: andar · Shift: correr · Arrastar o rato: rodar a câmara · E: interagir</div>
+      </div>
+      <div id="prompt" hidden></div>
+
+      <!-- Caixa de diálogo -->
+      <div id="dialog" hidden>
+        <div id="dialog-speaker"></div>
+        <div id="dialog-text"></div>
+        <div id="dialog-next">Espaço / clique para continuar ▸</div>
+      </div>
+
+      <!-- Ecrãs inteiros: título, narrador, mapa, fim de cena -->
+      <div id="overlay" hidden></div>
+
+      <!-- Notificações curtas (ex.: "Recebeste um pergaminho") -->
+      <div id="toast" hidden></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
