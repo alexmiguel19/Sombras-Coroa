@@ -4,6 +4,7 @@ Jogo educativo de História em 3D, no navegador, para alunos do **7.º ano** (12
 Em cerca de **15 minutos**, o aluno acompanha as três Guerras Fernandinas e chega ao Tratado de Salvaterra de Magos, percebendo como se gerou a **crise dinástica de 1383–1385**.
 
 Baseado no rascunho *Ambientes Educativos Digitais em História*; o guião completo está em [docs/guiao.md](docs/guiao.md).
+O guia para alunos e professores está em [docs/como-jogar.md](docs/como-jogar.md).
 
 ## O jogo
 
