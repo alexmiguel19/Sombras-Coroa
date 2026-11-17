@@ -2,6 +2,7 @@ import { Game, type Level } from './engine/Game';
 import { Cena1PacoReal } from './levels/cenario1/Cena1PacoReal';
 import { Cena2Galiza } from './levels/cenario1/Cena2Galiza';
 import { Cena3Alcoutim } from './levels/cenario1/Cena3Alcoutim';
+import { Cena1PortasVila } from './levels/cenario2/Cena1PortasVila';
 import { preloadModels } from './world/GltfCharacter';
 import { MODELS } from './world/cast';
 
@@ -15,6 +16,7 @@ const CENAS: { nome: string; criar: () => Level }[] = [
   { nome: 'No Paço Real (1369)', criar: () => new Cena1PacoReal() },
   { nome: 'Na Galiza (1369–1370)', criar: () => new Cena2Galiza() },
   { nome: 'O Tratado de Alcoutim (1371)', criar: () => new Cena3Alcoutim() },
+  { nome: 'Às portas de uma vila (1372)', criar: () => new Cena1PortasVila() },
 ];
 
 /**
@@ -46,8 +48,7 @@ async function start(): Promise<void> {
   // As cenas seguintes ainda estão em desenvolvimento.
   await game.ui.card(
     `<h2>Continua em breve…</h2>
-     <p>A seguir: <strong>2.º Cenário — Segunda Guerra Fernandina (1372–1373)</strong>.
-        D. Fernando não cumpre a promessa de casar com Leonor de Castela...</p>`,
+     <p>A seguir: <strong>Na praça da vila (1372)</strong> — a aliança com Inglaterra.</p>`,
     'Recomeçar',
   );
   location.href = location.pathname;

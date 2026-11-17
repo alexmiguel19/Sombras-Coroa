@@ -1,0 +1,50 @@
+{
+  "cenario": 2,
+  "cena": 1,
+  "titulo": "Segunda Guerra Fernandina",
+  "subtitulo": "Às portas de uma vila — o incumprimento do Tratado de Alcoutim",
+  "data": "1372",
+  "local": "Às portas de uma vila",
+  "narrador": "D. Fernando não cumpriu a promessa de casamento com Leonor de Castela. Em vez disso, casou em segredo com Leonor Teles, uma nobre portuguesa, em 1371.",
+  "dialogos": {
+    "porta": [
+      { "quem": "escudeiro", "texto": "Porque estão todos a fugir? A paz com Castela não tinha sido assinada?" },
+      { "quem": "guarda", "texto": "O nosso rei quebrou a promessa feita a Henrique II! Casou com Leonor Teles, em vez de casar com a filha do rei castelhano." },
+      { "quem": "campones", "texto": "E agora há novamente ameaças de guerra! Temos medo de perder as nossas casas e colheitas!" },
+      { "quem": "guarda", "texto": "Escudeiro, ajuda os camponeses que ainda estão nos campos a entrar na vila. Depois avisa o capitão da guarda, junto à torre.", "adicionada": true }
+    ],
+    "campones1": [
+      { "quem": "escudeiro", "texto": "Depressa, entra na vila! Os castelhanos podem chegar a qualquer momento.", "adicionada": true },
+      { "quem": "campones", "texto": "E o meu trigo? Ainda não acabei a colheita... Está bem, vou já!", "adicionada": true }
+    ],
+    "campones2": [
+      { "quem": "escudeiro", "texto": "Leva os teus animais e abriga-te dentro das muralhas.", "adicionada": true },
+      { "quem": "campones", "texto": "Tudo por causa de um casamento de reis... Somos sempre nós que sofremos!", "adicionada": true }
+    ],
+    "campones3": [
+      { "quem": "escudeiro", "texto": "Senhora, vem para dentro da vila. Aqui fora não estás segura.", "adicionada": true },
+      { "quem": "campones", "texto": "Obrigada, escudeiro. Dizem que Henrique II não perdoa a ofensa do nosso rei.", "adicionada": true }
+    ],
+    "ja_ajudado": [
+      { "quem": "campones", "texto": "Já vou a caminho da porta da vila!", "adicionada": true }
+    ],
+    "capitao_espera": [
+      { "quem": "guarda", "texto": "Primeiro ajuda os camponeses a entrar. Depois falamos.", "adicionada": true }
+    ],
+    "capitao": [
+      { "quem": "escudeiro", "texto": "Capitão, os camponeses já estão dentro das muralhas. Castela pode atacar a qualquer momento!", "adicionada": true },
+      { "quem": "guarda", "texto": "Fechem as portas e reforcem a vigia nas muralhas! Não seremos apanhados de surpresa.", "adicionada": true }
+    ]
+  },
+  "objetivos": {
+    "falar_guarda": "Fala com o guarda à porta da vila.",
+    "ajudar": "Ajuda os camponeses a entrar na vila",
+    "capitao": "Avisa o capitão da guarda, junto à torre.",
+    "concluida": "Cena concluída!"
+  },
+  "textos": {
+    "toast_ajudado": "Camponês a caminho da vila",
+    "fim_titulo": "Cena concluída",
+    "fim_texto": "Ao casar com Leonor Teles, D. Fernando quebrou o Tratado de Alcoutim. Henrique II sentiu-se ofendido e a ameaça de uma nova guerra com Castela voltou a assustar a população."
+  }
+}
