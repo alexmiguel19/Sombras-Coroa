@@ -1,0 +1,55 @@
+{
+  "cenario": 2,
+  "cena": 2,
+  "titulo": "Segunda Guerra Fernandina",
+  "subtitulo": "Na praça da vila — a aliança com Inglaterra",
+  "data": "1372",
+  "local": "Na praça da vila",
+  "narrador": "D. Fernando procurou novos aliados contra Castela. Em julho de 1372, estabeleceu o Tratado de Tagilde com representantes de João de Gante, duque de Lencastre.",
+  "dialogos": {
+    "mensageiro": [
+      { "quem": "escudeiro", "texto": "Quem sois? Porque trazeis o símbolo de Inglaterra?" },
+      { "quem": "mensageiro", "texto": "Trago notícias de uma aliança! João de Gante também reclama o trono de Castela e prometeu apoiar D. Fernando contra Henrique II." },
+      { "quem": "escudeiro", "texto": "Então Portugal e os ingleses têm o mesmo inimigo?" },
+      { "quem": "mensageiro", "texto": "Sim! Mas Henrique II já prepara as suas tropas para atacar Portugal!" },
+      { "quem": "mensageiro", "texto": "Leva este pergaminho da aliança ao comandante da vila. Ele tem de saber que contamos com os ingleses.", "adicionada": true }
+    ],
+    "mensageiro_depois": [
+      { "quem": "mensageiro", "texto": "Depressa, escudeiro! O comandante está à porta da casa da câmara.", "adicionada": true }
+    ],
+    "comandante_espera": [
+      { "quem": "comandante", "texto": "Escudeiro, ouvi dizer que chegou um mensageiro estrangeiro à praça. Descobre o que ele quer.", "adicionada": true }
+    ],
+    "comandante": [
+      { "quem": "escudeiro", "texto": "Comandante, trago o pergaminho do Tratado de Tagilde: Portugal aliou-se a João de Gante, duque de Lencastre.", "adicionada": true },
+      { "quem": "comandante", "texto": "Boas notícias! Mas, se Henrique II já prepara o ataque, temos de nos preparar também. Que a ajuda inglesa chegue a tempo...", "adicionada": true }
+    ],
+    "aldeao": [
+      { "quem": "campones", "texto": "Um inglês aqui na praça? Diz-se que vem tratar de uma aliança contra Castela.", "adicionada": true }
+    ]
+  },
+  "objetivos": {
+    "mensageiro": "Descobre quem é o mensageiro estrangeiro na praça.",
+    "comandante": "Entrega o pergaminho da aliança ao comandante da vila.",
+    "concluida": "Cena concluída!"
+  },
+  "textos": {
+    "toast_pergaminho": "Recebeste o pergaminho da aliança",
+    "fim_titulo": "Cena concluída",
+    "fim_texto": "Pelo Tratado de Tagilde (1372), Portugal e João de Gante, duque de Lencastre, aliaram-se contra Henrique II de Castela. Mas o rei castelhano não esperou: preparou-se para invadir Portugal."
+  },
+  "desafio": {
+    "titulo": "O Tratado de Tagilde",
+    "cabecalho": "Aliança entre D. Fernando, rei de Portugal, e os representantes de João de Gante, duque de Lencastre. Tagilde, julho de 1372.",
+    "instrucao": "Lê o pergaminho e escolhe as duas afirmações verdadeiras sobre esta aliança.",
+    "opcoes": [
+      { "texto": "Portugal alia-se a Aragão contra Castela.", "certa": false, "explicacao": "Aragão foi o aliado procurado na Primeira Guerra, sem sucesso. Agora o aliado vem de Inglaterra." },
+      { "texto": "D. Fernando alia-se a João de Gante, duque de Lencastre, um nobre inglês.", "certa": true },
+      { "texto": "Inglaterra e Castela unem-se contra Portugal.", "certa": false, "explicacao": "Pelo contrário: João de Gante também queria o trono de Castela, por isso era inimigo de Henrique II." },
+      { "texto": "O inimigo comum dos dois aliados é Henrique II de Castela.", "certa": true },
+      { "texto": "D. Fernando promete casar com Leonor, filha de Henrique II.", "certa": false, "explicacao": "Essa promessa era do Tratado de Alcoutim (1371) e D. Fernando não a cumpriu: casou com Leonor Teles." }
+    ],
+    "certo": "Exato! Pelo Tratado de Tagilde, Portugal e João de Gante juntaram-se contra o mesmo inimigo: Henrique II de Castela.",
+    "botao": "Levar o pergaminho ao comandante"
+  }
+}
