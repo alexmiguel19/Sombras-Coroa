@@ -68,7 +68,7 @@ O rei sela o documento e a imagem escurece. A 22 de outubro de 1383, os sinos an
 | 3.º Cenário · Cena 1 — No Paço Real (1381) | ✅ jogável |
 | 3.º Cenário · Cena 2 — Em Lisboa (1381–1382) | ✅ jogável |
 | 3.º Cenário · Cena 3 — Em Elvas (1382) | ✅ jogável |
-| Epílogo e desafio final | por fazer |
+| Epílogo e desafio final | ✅ jogável |
 
 ## Como jogar
 

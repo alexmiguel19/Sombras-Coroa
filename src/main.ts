@@ -7,6 +7,7 @@ import { Cena2PracaVila } from './levels/cenario2/Cena2PracaVila';
 import { Cena3Santarem } from './levels/cenario2/Cena3Santarem';
 import { Cena1PacoReal1381 } from './levels/cenario3/Cena1PacoReal1381';
 import { Cena2Lisboa } from './levels/cenario3/Cena2Lisboa';
+import { Epilogo } from './levels/Epilogo';
 import elvas from './story/cenario3/cena3.json';
 import type { CenaTexto } from './story/types';
 import { preloadModels } from './world/GltfCharacter';
@@ -28,6 +29,7 @@ const CENAS: { nome: string; criar: () => Level }[] = [
   { nome: 'No Paço Real (1381)', criar: () => new Cena1PacoReal1381() },
   { nome: 'Em Lisboa (1381–1382)', criar: () => new Cena2Lisboa() },
   { nome: 'Em Elvas (1382)', criar: () => new Cena3Santarem(elvas as CenaTexto, false) },
+  { nome: 'Epílogo — Salvaterra de Magos (1383)', criar: () => new Epilogo() },
 ];
 
 /**
@@ -56,12 +58,7 @@ async function start(): Promise<void> {
     await game.play(CENAS[i].criar());
   }
 
-  // As cenas seguintes ainda estão em desenvolvimento.
-  await game.ui.card(
-    `<h2>Continua em breve…</h2>
-     <p>A seguir: <strong>Epílogo — Salvaterra de Magos (1383)</strong>.</p>`,
-    'Recomeçar',
-  );
+  // Fim do jogo: o último ecrã do Epílogo tem o botão "Jogar de novo".
   location.href = location.pathname;
 }
 

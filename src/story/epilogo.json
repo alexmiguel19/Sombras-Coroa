@@ -1,0 +1,76 @@
+{
+  "cenario": 3,
+  "cena": 4,
+  "titulo": "Epílogo",
+  "subtitulo": "Salvaterra de Magos — o futuro da Coroa portuguesa",
+  "data": "1383",
+  "local": "Salvaterra de Magos",
+  "narrador": "Em 1383, depois da morte da rainha de Castela, foi negociado um novo acordo. D. Beatriz já não casaria com o filho do rei castelhano, mas com o próprio Juan I de Castela.",
+  "dialogos": {
+    "rei": [
+      { "quem": "escudeiro", "texto": "Majestade, porque mudou o casamento da princesa?" },
+      { "quem": "fernando", "texto": "O rei de Castela ficou viúvo. Este casamento poderá reforçar a paz e assegurar o futuro da minha filha." },
+      { "quem": "conselheiro", "texto": "Mas D. Beatriz é a herdeira de Portugal! Se casar com o rei castelhano, muitos poderão recear pela independência do nosso reino." },
+      { "quem": "fernando", "texto": "O tratado estabelece condições para que Portugal e Castela continuem separados." },
+      { "quem": "escudeiro", "texto": "Mas quem nos garante que essas condições serão respeitadas?" }
+    ],
+    "rei_espera": [
+      { "quem": "fernando", "texto": "Examina o pergaminho do tratado, na mesa.", "adicionada": true }
+    ],
+    "conselheiro": [
+      { "quem": "conselheiro", "texto": "O rei está doente e não tem filhos varões. Tudo depende agora deste tratado...", "adicionada": true }
+    ],
+    "guarda": [
+      { "quem": "guarda", "texto": "Dizem que vem aí um casamento real com Castela.", "adicionada": true }
+    ],
+    "depois": [
+      { "quem": "fernando", "texto": "A minha filha Beatriz casará com o rei de Castela. Desejo assegurar a sucessão e preservar a paz entre os reinos." },
+      { "quem": "escudeiro", "texto": "Majestade, mas os nobres receiam que Portugal perca a sua independência!" },
+      { "quem": "fernando", "texto": "O tratado estabelece condições para manter os reinos separados. Porém, o futuro já não dependerá apenas da minha vontade." }
+    ]
+  },
+  "objetivos": {
+    "falar_rei": "Fala com D. Fernando, no trono.",
+    "pergaminho": "Examina o pergaminho do tratado, na mesa.",
+    "desafio_final": "Desafio final",
+    "concluida": "Fim"
+  },
+  "textos": {
+    "selo": "O rei coloca o seu selo no Tratado de Salvaterra de Magos.",
+    "final3_data": "1383 · Tratado de Salvaterra de Magos",
+    "final3_titulo": "Final do 3.º Cenário",
+    "final3_texto": "A Terceira Guerra Fernandina terminou com a Paz de Elvas, em 1382. No ano seguinte, o Tratado de Salvaterra de Magos reforçou o entendimento entre Portugal e Castela através do casamento de D. Beatriz com Juan I de Castela.",
+    "final3_citacao": "O acordo procurava preservar a separação dos dois reinos, mas o futuro da independência portuguesa provocava preocupação...",
+    "morte_data": "22 de outubro de 1383",
+    "morte_texto": "O som dos sinos anuncia a morte de D. Fernando.",
+    "mensagem": "O rei morreu sem deixar um filho varão. D. Beatriz é a sua herdeira, mas o casamento com o rei de Castela provoca uma grave crise sucessória. Quem governará Portugal?"
+  },
+  "desafio": {
+    "titulo": "O Tratado de Salvaterra de Magos",
+    "cabecalho": "Acordo entre D. Fernando, rei de Portugal, e Juan I, rei de Castela. Salvaterra de Magos, 1383.",
+    "instrucao": "Examina o pergaminho: com quem casará D. Beatriz e qual é o perigo dessa união?",
+    "opcoes": [
+      { "texto": "D. Beatriz casará com o infante D. Fernando, filho de Juan I.", "certa": false, "explicacao": "Isso era o que estava combinado na Paz de Elvas (1382). Em 1383 o acordo mudou." },
+      { "texto": "D. Beatriz casará com Juan I, rei de Castela.", "certa": true },
+      { "texto": "O perigo é Inglaterra invadir Portugal.", "certa": false, "explicacao": "Inglaterra era aliada de Portugal. O receio vinha de Castela." },
+      { "texto": "O perigo é Portugal ficar sob o domínio do rei de Castela e perder a independência.", "certa": true },
+      { "texto": "D. Beatriz casará com João de Gante, duque de Lencastre.", "certa": false, "explicacao": "João de Gante foi o aliado inglês do Tratado de Tagilde (1372), não o noivo de D. Beatriz." }
+    ],
+    "certo": "Exato! D. Beatriz, herdeira de Portugal, casará com Juan I de Castela. Muitos temiam que Portugal acabasse governado pelo rei castelhano.",
+    "botao": "Assinar o tratado"
+  },
+  "desafio_final": {
+    "titulo": "Desafio final",
+    "cabecalho": "Durante o reinado de D. Fernando foram assinados vários acordos com Castela e com Inglaterra.",
+    "instrucao": "Escolhe os três acordos de paz que puseram fim a cada uma das Guerras Fernandinas.",
+    "opcoes": [
+      { "texto": "Tratado de Alcoutim (1371)", "certa": true },
+      { "texto": "Tratado de Tagilde (1372)", "certa": false, "explicacao": "O Tratado de Tagilde foi uma aliança com João de Gante contra Castela, não um acordo de paz." },
+      { "texto": "Paz de Santarém (1373)", "certa": true },
+      { "texto": "Paz de Elvas (1382)", "certa": true },
+      { "texto": "Tratado de Salvaterra de Magos (1383)", "certa": false, "explicacao": "Salvaterra de Magos não terminou nenhuma guerra: foi um acordo matrimonial e sucessório, depois da Paz de Elvas." }
+    ],
+    "certo": "Muito bem! Alcoutim terminou a Primeira Guerra, Santarém a Segunda e Elvas a Terceira. Salvaterra de Magos veio depois, para tratar do casamento e da sucessão.",
+    "botao": "Continuar"
+  }
+}

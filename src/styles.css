@@ -171,6 +171,12 @@ html, body {
 .treaty-option.wrong { animation: shake 0.4s; background: rgba(181, 85, 85, 0.25); }
 .treaty-option.faded { opacity: 0.45; cursor: default; }
 
+/* ---------- Final: imagem a escurecer ---------- */
+#overlay.fade-black { background: #000; animation: fadein 2.5s ease; }
+.ending { text-align: center; color: var(--parchment); animation: fadein 2s ease; }
+.ending .date { font-family: var(--title); font-size: clamp(24px, 5vw, 40px); letter-spacing: 0.08em; color: var(--gold); }
+.ending p { font-size: 24px; font-style: italic; }
+
 /* ---------- Notificação ---------- */
 #toast {
   position: absolute; top: 16px; left: 50%; transform: translateX(-50%);

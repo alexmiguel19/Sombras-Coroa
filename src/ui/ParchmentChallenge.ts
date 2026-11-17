@@ -40,7 +40,7 @@ export function runParchmentChallenge(container: HTMLElement, d: DesafioPergamin
           el.classList.add('right');
           el.setAttribute('aria-pressed', 'true');
           counter.textContent = `(${found}/${total})`;
-          feedback.textContent = found < total ? 'Certo! Falta encontrar mais uma condição.' : d.certo;
+          feedback.textContent = found < total ? `Certo! ${total - found === 1 ? 'Falta mais uma.' : `Faltam mais ${total - found}.`}` : d.certo;
           if (found === total) finish();
         } else {
           el.classList.remove('wrong');
