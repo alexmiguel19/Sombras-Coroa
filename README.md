@@ -61,7 +61,7 @@ O rei sela o documento e a imagem escurece. A 22 de outubro de 1383, os sinos an
 |---|---|
 | 1.º Cenário · Cena 1 — No Paço Real (1369) | ✅ jogável |
 | 1.º Cenário · Cena 2 — Na Galiza (1369–1370) | ✅ jogável |
-| 1.º Cenário · Cena 3 — O Tratado de Alcoutim (1371) | por fazer |
+| 1.º Cenário · Cena 3 — O Tratado de Alcoutim (1371) | ✅ jogável |
 | 2.º Cenário · Cenas 1–3 | por fazer |
 | 3.º Cenário · Cenas 1–3 | por fazer |
 | Epílogo e desafio final | por fazer |
@@ -77,6 +77,8 @@ O rei sela o documento e a imagem escurece. A 22 de outubro de 1383, os sinos an
 | Interagir / avançar diálogo | E, Espaço ou clique |
 
 A caixa no canto superior esquerdo mostra a missão atual. Um losango dourado assinala com quem falar.
+
+Há dois minijogos: localizar uma região no mapa da Península Ibérica, e ler o pergaminho de um tratado para escolher as condições certas. Uma resposta errada explica porquê, e o aluno pode tentar outra vez.
 
 O jogo é feito para computador com teclado e rato. Não há pontuação nem é possível perder: o aluno avança ao cumprir cada missão.
 

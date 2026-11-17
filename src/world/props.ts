@@ -184,6 +184,87 @@ export function spearRack(): THREE.Group {
   return shadows(g);
 }
 
+/** Casa caiada com telhado de telha (vilas do Sul). `w` = largura (X), `d` = profundidade (Z). */
+export function house(w = 4, d = 3.5, h = 2.6): THREE.Group {
+  const g = new THREE.Group();
+  const walls = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(0xe9e3d3, 0.95));
+  walls.position.y = h / 2;
+  const roof = new THREE.Mesh(new THREE.ConeGeometry(Math.SQRT1_2, 1, 4, 1), mat(0xa8553a));
+  roof.rotation.y = Math.PI / 4;
+  roof.scale.set(w + 0.4, 1.3, d + 0.4);
+  roof.position.y = h + 0.65;
+  const door = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.6, 0.08), mat(0x5a3a1a));
+  door.position.set(-w * 0.2, 0.8, d / 2 + 0.02);
+  const win = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.5, 0.08), mat(0x2a2a2a));
+  win.position.set(w * 0.22, 1.6, d / 2 + 0.02);
+  const band = new THREE.Mesh(new THREE.BoxGeometry(w + 0.02, 0.35, d + 0.02), mat(0x3f6a9a));
+  band.position.y = 0.175; // barra azul junto ao chão, típica das casas caiadas
+  g.add(walls, roof, door, win, band);
+  return shadows(g);
+}
+
+/** Castelo simples: muralha quadrada com quatro torres e ameias. `size` = lado em metros. */
+export function castle(size = 14, wallH = 5, color = 0xb5a88e): THREE.Group {
+  const g = new THREE.Group();
+  const stone = mat(color, 0.95);
+  const merlon = new THREE.BoxGeometry(0.6, 0.6, 0.6);
+  const half = size / 2;
+  for (const [x, z, w, d] of [[0, -half, size, 1], [0, half, size, 1], [-half, 0, 1, size], [half, 0, 1, size]] as const) {
+    const wall = new THREE.Mesh(new THREE.BoxGeometry(w, wallH, d), stone);
+    wall.position.set(x, wallH / 2, z);
+    g.add(wall);
+    const n = Math.floor(Math.max(w, d) / 1.2);
+    for (let i = 0; i < n; i++) {
+      const t = -Math.max(w, d) / 2 + (i + 0.5) * (Math.max(w, d) / n);
+      const m = new THREE.Mesh(merlon, stone);
+      m.position.set(w > d ? x + t : x, wallH + 0.3, w > d ? z : z + t);
+      if (i % 2 === 0) g.add(m);
+    }
+  }
+  for (const [x, z] of [[-half, -half], [half, -half], [-half, half], [half, half]]) {
+    const tower = new THREE.Mesh(new THREE.BoxGeometry(2.6, wallH + 2.5, 2.6), stone);
+    tower.position.set(x, (wallH + 2.5) / 2, z);
+    g.add(tower);
+    for (const [mx, mz] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+      const m = new THREE.Mesh(merlon, stone);
+      m.position.set(x + mx * 1, wallH + 2.8, z + mz * 1);
+      g.add(m);
+    }
+  }
+  // Torre de menagem no centro
+  const keep = new THREE.Mesh(new THREE.BoxGeometry(4, wallH + 5, 4), stone);
+  keep.position.y = (wallH + 5) / 2;
+  g.add(keep);
+  return shadows(g);
+}
+
+/** Barco de madeira de fundo chato (travessia do rio). */
+export function boat(): THREE.Group {
+  const g = new THREE.Group();
+  const wood = mat(0x6b4a2a);
+  const bottom = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.15, 4), wood);
+  bottom.position.y = 0.1;
+  g.add(bottom);
+  for (const x of [-0.75, 0.75]) {
+    const side = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.5, 4), wood);
+    side.position.set(x, 0.35, 0);
+    g.add(side);
+  }
+  for (const z of [-1.95, 1.95]) {
+    const end = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.5, 0.1), wood);
+    end.position.set(0, 0.35, z);
+    g.add(end);
+  }
+  const seat = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.08, 0.4), wood);
+  seat.position.set(0, 0.4, 0.4);
+  const oar = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 2.6, 5), wood);
+  oar.position.set(0.9, 0.5, 0.2);
+  oar.rotation.x = Math.PI / 2 - 0.2;
+  oar.rotation.z = 0.3;
+  g.add(seat, oar);
+  return shadows(g);
+}
+
 /**
  * Marcador flutuante (losango dourado) sobre quem tem uma missão para o jogador.
  * Chamar `animateMarker` em cada frame.

@@ -9,7 +9,9 @@ export type QuemFala =
   | 'campones'
   | 'mensageiro'
   | 'mercador'
-  | 'comandante';
+  | 'comandante'
+  | 'escrivao'
+  | 'castelhano';
 
 export interface Fala {
   quem: QuemFala;
@@ -36,4 +38,25 @@ export interface CenaTexto {
   objetivos: Record<string, string>;
   /** Mensagens curtas (notificações) e textos de minijogos. */
   textos: Record<string, string>;
+  /** Desafio do pergaminho (escolher as condições certas de um tratado), quando a cena o tem. */
+  desafio?: DesafioPergaminho;
+}
+
+export interface OpcaoDesafio {
+  texto: string;
+  certa: boolean;
+  /** Explicação mostrada quando o aluno escolhe esta opção por engano. */
+  explicacao?: string;
+}
+
+/** Minijogo: ler um pergaminho e escolher as condições certas do tratado. */
+export interface DesafioPergaminho {
+  titulo: string;
+  /** Texto do pergaminho, mostrado antes das opções. */
+  cabecalho: string;
+  instrucao: string;
+  opcoes: OpcaoDesafio[];
+  /** Mensagem quando todas as opções certas estão escolhidas. */
+  certo: string;
+  botao: string;
 }

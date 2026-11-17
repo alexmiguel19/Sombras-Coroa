@@ -11,4 +11,6 @@ export const PERSONAGENS: Record<QuemFala, { nome: string }> = {
   mensageiro: { nome: 'Mensageiro inglês' },
   mercador: { nome: 'Mercador' },
   comandante: { nome: 'Comandante' },
+  escrivao: { nome: 'Escrivão' },
+  castelhano: { nome: 'Embaixador castelhano' },
 };

@@ -1,0 +1,66 @@
+{
+  "cenario": 1,
+  "cena": 3,
+  "titulo": "Primeira Guerra Fernandina",
+  "subtitulo": "O Tratado de Alcoutim — o fim da Primeira Guerra",
+  "data": "1371",
+  "local": "Alcoutim, junto ao rio Guadiana",
+  "narrador": "Em 1371, depois de dois anos de guerra, os enviados de D. Fernando e de Henrique II encontraram-se em Alcoutim, junto ao rio Guadiana, na fronteira entre Portugal e Castela, para negociar a paz.",
+  "dialogos": {
+    "rei": [
+      { "quem": "escudeiro", "texto": "Majestade, não conseguimos conquistar Castela. Que faremos agora?" },
+      { "quem": "fernando", "texto": "Aceitaremos a paz. Renunciarei às minhas pretensões ao trono castelhano." },
+      { "quem": "conselheiro", "texto": "Henrique II exige também que Vossa Majestade case com a sua filha Leonor, para reforçar a aliança entre os dois reinos." },
+      { "quem": "escudeiro", "texto": "Então um casamento pode garantir a paz?" },
+      { "quem": "fernando", "texto": "Esse é o objetivo. Mas a política dos reis pode mudar..." },
+      { "quem": "fernando", "texto": "Os embaixadores castelhanos deixaram o pergaminho com as condições do tratado na mesa do escrivão, junto ao rio. Vai buscá-lo e traz-mo.", "adicionada": true }
+    ],
+    "rei_espera": [
+      { "quem": "fernando", "texto": "Traz-me o pergaminho que está na mesa do escrivão, junto ao rio.", "adicionada": true }
+    ],
+    "conselheiro": [
+      { "quem": "conselheiro", "texto": "Os embaixadores de Henrique II atravessaram o Guadiana de barco. Na outra margem do rio já é Castela.", "adicionada": true }
+    ],
+    "escrivao": [
+      { "quem": "escrivao", "texto": "Aqui está o pergaminho com as condições do tratado, escudeiro. Lê-o com atenção antes de o levares ao rei.", "adicionada": true }
+    ],
+    "castelhano": [
+      { "quem": "castelhano", "texto": "O meu senhor, Henrique II, quer a paz. Que o vosso rei cumpra tudo o que ficou escrito neste tratado.", "adicionada": true }
+    ],
+    "escrivao_depois": [
+      { "quem": "escrivao", "texto": "O rei espera por esse pergaminho, escudeiro. Não te demores.", "adicionada": true }
+    ],
+    "entrega": [
+      { "quem": "escudeiro", "texto": "Majestade, aqui está o pergaminho com as condições do Tratado de Alcoutim.", "adicionada": true },
+      { "quem": "fernando", "texto": "Renuncio ao trono de Castela e casarei com Leonor, filha de Henrique II. Assim termina esta guerra.", "adicionada": true },
+      { "quem": "conselheiro", "texto": "Que este casamento traga uma paz duradoura, Majestade.", "adicionada": true }
+    ]
+  },
+  "objetivos": {
+    "falar_rei": "Fala com D. Fernando, no pavilhão real.",
+    "pergaminho": "Vai buscar o pergaminho à mesa do escrivão, junto ao rio.",
+    "entregar": "Entrega ao rei o pergaminho com as condições do tratado.",
+    "concluida": "1.º Cenário concluído!"
+  },
+  "textos": {
+    "toast_pergaminho": "Recebeste o pergaminho do tratado",
+    "fim_data": "1371 · O Tratado de Alcoutim",
+    "fim_titulo": "Final do 1.º Cenário",
+    "fim_texto": "A Primeira Guerra Fernandina terminou. D. Fernando não conseguiu conquistar o trono de Castela: renunciou às suas pretensões e prometeu casar com Leonor, filha de Henrique II, para garantir a paz entre os dois reinos.",
+    "fim_citacao": "Mas a política dos reis pode mudar... Cumprirá D. Fernando a sua promessa?"
+  },
+  "desafio": {
+    "titulo": "O Tratado de Alcoutim",
+    "cabecalho": "Tratado de paz entre D. Fernando, rei de Portugal, e Henrique II, rei de Castela. Feito em Alcoutim, no ano de 1371.",
+    "instrucao": "Lê o pergaminho e escolhe as duas condições que D. Fernando aceitou neste tratado.",
+    "opcoes": [
+      { "texto": "D. Fernando renuncia às suas pretensões ao trono de Castela.", "certa": true },
+      { "texto": "Portugal entrega a Galiza ao rei de Castela.", "certa": false, "explicacao": "A Galiza não era portuguesa: fazia parte do reino de Castela. D. Fernando apenas tinha procurado apoio em cidades galegas." },
+      { "texto": "D. Fernando casará com Leonor, filha de Henrique II.", "certa": true },
+      { "texto": "Portugal faz uma aliança com Inglaterra contra Castela.", "certa": false, "explicacao": "Isso só aconteceu mais tarde, em 1372, com o Tratado de Tagilde, e levou a uma nova guerra." },
+      { "texto": "D. Fernando casará com Leonor Teles, uma nobre portuguesa.", "certa": false, "explicacao": "Atenção ao nome! A noiva prometida neste tratado é Leonor de Castela, filha de Henrique II. Leonor Teles era uma nobre portuguesa." }
+    ],
+    "certo": "Exato! Pelo Tratado de Alcoutim, D. Fernando desiste do trono de Castela e promete casar com Leonor, filha de Henrique II, para reforçar a paz entre os dois reinos.",
+    "botao": "Levar o pergaminho ao rei"
+  }
+}
