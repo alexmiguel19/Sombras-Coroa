@@ -8,7 +8,7 @@
   "narrador": "D. Fernando procurou novos aliados contra Castela. Em julho de 1372, estabeleceu o Tratado de Tagilde com representantes de João de Gante, duque de Lencastre.",
   "dialogos": {
     "mensageiro": [
-      { "quem": "escudeiro", "texto": "Quem sois? Porque trazeis o símbolo de Inglaterra?" },
+      { "quem": "escudeiro", "texto": "Quem sois? Por que trazeis o símbolo de Inglaterra?" },
       { "quem": "mensageiro", "texto": "Trago notícias de uma aliança! João de Gante também reclama o trono de Castela e prometeu apoiar D. Fernando contra Henrique II." },
       { "quem": "escudeiro", "texto": "Então Portugal e os ingleses têm o mesmo inimigo?" },
       { "quem": "mensageiro", "texto": "Sim! Mas Henrique II já prepara as suas tropas para atacar Portugal!" },

@@ -8,7 +8,7 @@
   "narrador": "As tropas inglesas chegaram a Portugal em 1381, mas alguns soldados cometeram roubos e violências contra a população. Em 1382, os navios castelhanos dominaram o Tejo, dificultando a circulação marítima.",
   "dialogos": {
     "mercador": [
-      { "quem": "escudeiro", "texto": "Porque estão as bancas vazias? E porque há navios castelhanos no Tejo?" },
+      { "quem": "escudeiro", "texto": "Por que estão as bancas vazias? E por que há navios castelhanos no Tejo?" },
       { "quem": "mercador", "texto": "Os castelhanos controlam o rio e prejudicam o comércio! E alguns soldados ingleses, que vieram ajudar-nos, roubam os nossos bens!" },
       { "quem": "escudeiro", "texto": "Mas os ingleses não são nossos aliados?" },
       { "quem": "mercador", "texto": "São, mas nem todos respeitam a população. Estamos a sofrer com esta guerra!" }

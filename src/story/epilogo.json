@@ -8,7 +8,7 @@
   "narrador": "Em 1383, depois da morte da rainha de Castela, foi negociado um novo acordo. D. Beatriz já não casaria com o filho do rei castelhano, mas com o próprio Juan I de Castela.",
   "dialogos": {
     "rei": [
-      { "quem": "escudeiro", "texto": "Majestade, porque mudou o casamento da princesa?" },
+      { "quem": "escudeiro", "texto": "Majestade, por que mudou o casamento da princesa?" },
       { "quem": "fernando", "texto": "O rei de Castela ficou viúvo. Este casamento poderá reforçar a paz e assegurar o futuro da minha filha." },
       { "quem": "conselheiro", "texto": "Mas D. Beatriz é a herdeira de Portugal! Se casar com o rei castelhano, muitos poderão recear pela independência do nosso reino." },
       { "quem": "fernando", "texto": "O tratado estabelece condições para que Portugal e Castela continuem separados." },

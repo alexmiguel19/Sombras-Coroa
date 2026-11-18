@@ -8,7 +8,7 @@
   "narrador": "D. Fernando não cumpriu a promessa de casamento com Leonor de Castela. Em vez disso, casou em segredo com Leonor Teles, uma nobre portuguesa, em 1371.",
   "dialogos": {
     "porta": [
-      { "quem": "escudeiro", "texto": "Porque estão todos a fugir? A paz com Castela não tinha sido assinada?" },
+      { "quem": "escudeiro", "texto": "Por que estão todos a fugir? A paz com Castela não tinha sido assinada?" },
       { "quem": "guarda", "texto": "O nosso rei quebrou a promessa feita a Henrique II! Casou com Leonor Teles, em vez de casar com a filha do rei castelhano." },
       { "quem": "campones", "texto": "E agora há novamente ameaças de guerra! Temos medo de perder as nossas casas e colheitas!" },
       { "quem": "guarda", "texto": "Escudeiro, ajuda os camponeses que ainda estão nos campos a entrar na vila. Depois avisa o capitão da guarda, junto à torre.", "adicionada": true }
