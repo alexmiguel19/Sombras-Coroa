@@ -131,8 +131,8 @@ docs/guiao.md    guião original
 |---|---|---|
 | Conselheiros, mercadores e personagens de reserva (`public/models/polypizza/*.glb`) | [Quaternius](https://quaternius.com), via [Poly Pizza](https://poly.pizza) | CC0 1.0 (ver `CREDITOS.txt` na mesma pasta) |
 
-| Árvores, caixotes, barris, barcos, navios, bancas, chafariz e fogueiras (`public/models/kenney/`) | [Kenney](https://www.kenney.nl) (Nature, Pirate e Fantasy Town Kit) | CC0 1.0 (ver `CREDITOS.txt` e `LICENSE.txt` na mesma pasta) |
+| Fogueiras, chafariz e carroça (`public/models/kenney/`) | [Kenney](https://www.kenney.nl) (Nature e Fantasy Town Kit) | CC0 1.0 (ver `CREDITOS.txt` e `LICENSE.txt` na mesma pasta) |
 
 | Escudeiro, rei, guardas, camponeses, animações, casas modulares, texturas de pedra, árvores e adereços (`public/models/quaternius-fantasy/`, `public/textures/`) | [Quaternius](https://quaternius.com) (Modular Character Outfits – Fantasy, Universal Animation Library, Medieval Village, Fantasy Props e Stylized Nature MegaKit) | CC0 1.0 (ver `CREDITOS.txt`) |
 
-As tendas ainda são feitas com formas simples do Three.js (nenhum dos packs gratuitos tem tendas). Se um modelo não carregar, o jogo usa automaticamente a versão simples da personagem.
+As tendas ainda são feitas com formas simples do Three.js (nenhum dos packs gratuitos tem tendas). A coca castelhana e os bateis são modelados no próprio jogo (`src/world/ships.ts`), ao estilo do séc. XIV. Se um modelo não carregar, o jogo usa automaticamente a versão simples da personagem.

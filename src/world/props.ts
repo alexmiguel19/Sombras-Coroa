@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { royalBanner, castileBanner, tentCloth, stoneWall } from './textures';
 import { KIT, kitModel, kitRaw } from './kit';
+import { rowingBoat } from './ships';
 
 /**
  * Adereços reutilizáveis entre cenas (exterior medieval).
@@ -432,32 +433,9 @@ export function castle(size = 14, wallH = 5, color = 0xb5a88e): THREE.Group {
 }
 
 /** Barco de madeira de fundo chato (travessia do rio). */
+/** Batel de remos do séc. XIV (ver ships.ts). */
 export function boat(): THREE.Group {
-  const k = kitModel(KIT.boat, { length: 4.2, alongZ: true });
-  if (k) return k;
-  const g = new THREE.Group();
-  const wood = mat(0x6b4a2a);
-  const bottom = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.15, 4), wood);
-  bottom.position.y = 0.1;
-  g.add(bottom);
-  for (const x of [-0.75, 0.75]) {
-    const side = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.5, 4), wood);
-    side.position.set(x, 0.35, 0);
-    g.add(side);
-  }
-  for (const z of [-1.95, 1.95]) {
-    const end = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.5, 0.1), wood);
-    end.position.set(0, 0.35, z);
-    g.add(end);
-  }
-  const seat = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.08, 0.4), wood);
-  seat.position.set(0, 0.4, 0.4);
-  const oar = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 2.6, 5), wood);
-  oar.position.set(0.9, 0.5, 0.2);
-  oar.rotation.x = Math.PI / 2 - 0.2;
-  oar.rotation.z = 0.3;
-  g.add(seat, oar);
-  return shadows(g);
+  return rowingBoat();
 }
 
 /**

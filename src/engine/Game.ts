@@ -62,7 +62,7 @@ export class Game {
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.1;
+    this.renderer.toneMappingExposure = 1.4; // mais claro: o ACES escurece bastante os tons médios
 
     this.input = new Input(canvas);
     this.player = new PlayerController(this.camera, this.input, this.world);

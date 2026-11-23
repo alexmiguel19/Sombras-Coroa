@@ -47,8 +47,6 @@ export const KIT = {
   gable6: q('village/Roof_Front_Brick6'),
   gable8: q('village/Roof_Front_Brick8'),
   campfire: k('nature/campfire_stones'),
-  boat: k('pirate/boat-row-small'),
-  ship: k('pirate/ship-large'),
   fountain: k('town/fountain-round'),
   cart: k('town/cart'),
 };

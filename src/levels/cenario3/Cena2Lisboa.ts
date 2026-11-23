@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 import type { Game, Level, Npc } from '../../engine/Game';
 import { castNpc } from '../../world/cast';
-import { castileBanner, stoneFloor, tentCloth } from '../../world/textures';
+import { stoneFloor, tentCloth } from '../../world/textures';
 import { animateMarker, barrel, boat, crate, house, marker } from '../../world/props';
+import { cog } from '../../world/ships';
 import { KIT, kitModel } from '../../world/kit';
-import { banner } from '../../world/props';
 import { escapeHtml } from '../../ui/UI';
 import texto from '../../story/cenario3/cena2.json';
 import type { CenaTexto } from '../../story/types';
@@ -64,7 +64,7 @@ export class Cena2Lisboa implements Level {
 
     // ---------- Navios castelhanos a bloquear o Tejo ----------
     for (const [x, z, r] of [[-22, -40, 0.3], [2, -52, -0.2], [26, -42, 0.5], [-6, -78, 0.1], [40, -70, -0.4]] as const) {
-      const s = this.ship();
+      const s = cog(true);
       s.position.set(x, -0.6, z);
       s.rotation.y = r;
       s.userData.phase = x;
@@ -181,37 +181,6 @@ export class Cena2Lisboa implements Level {
     for (const { m } of this.markers) if (m.visible) animateMarker(m, 2.7, this.time);
   }
 
-  /** Navio de guerra castelhano: casco, castelos de proa e popa, mastro e vela com as armas de Castela. */
-  private ship(): THREE.Group {
-    const kitShip = kitModel(KIT.ship, { length: 16, alongZ: true });
-    if (kitShip) {
-      kitShip.children[0].position.y -= 1.4; // parte do casco fica dentro de água
-      const flag = banner("castela", 4);
-      flag.scale.setScalar(1.6);
-      flag.position.set(0, 2, -6);
-      kitShip.add(flag);
-      return kitShip;
-    }
-    const g = new THREE.Group();
-    const wood = new THREE.MeshStandardMaterial({ color: 0x5a3a20, roughness: 0.9, flatShading: true });
-    const hull = new THREE.Mesh(new THREE.BoxGeometry(4, 2, 14), wood);
-    hull.position.y = 0.6;
-    const bow = new THREE.Mesh(new THREE.ConeGeometry(2.83, 4, 4, 1), wood);
-    bow.rotation.set(Math.PI / 2, Math.PI / 4, 0);
-    bow.scale.set(1, 1, 0.7);
-    bow.position.set(0, 0.6, 9);
-    const aft = new THREE.Mesh(new THREE.BoxGeometry(4.2, 1.6, 3.5), wood);
-    aft.position.set(0, 2.4, -5.3);
-    const fore = new THREE.Mesh(new THREE.BoxGeometry(3.6, 1.2, 2.6), wood);
-    fore.position.set(0, 2.2, 5.6);
-    const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.2, 11, 6), wood);
-    mast.position.y = 6.5;
-    const sail = new THREE.Mesh(new THREE.PlaneGeometry(6, 6.5), new THREE.MeshStandardMaterial({ map: castileBanner(), side: THREE.DoubleSide, roughness: 1 }));
-    sail.position.set(0, 7, 0.2);
-    g.add(hull, bow, aft, fore, mast, sail);
-    g.traverse((o) => { o.castShadow = true; });
-    return g;
-  }
 
   /** Banca de mercado vazia (o comércio parou por causa do bloqueio). */
   private emptyStall(x: number, z: number, stripe: string): THREE.Group {

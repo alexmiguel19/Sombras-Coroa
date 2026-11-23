@@ -1,5 +1,5 @@
 Adereços do cenário — autor: Kenney (https://www.kenney.nl)
 Licença: CC0 1.0 Universal (domínio público). Ver LICENSE.txt.
 - nature/  Nature Kit (árvores, rocha, fogueira)
-- pirate/  Pirate Kit (barril, caixote, barco a remos, navio)
+- (Pirate Kit retirado: os barcos passaram a ser feitos no jogo, ver src/world/ships.ts)
 - town/    Fantasy Town Kit (bancas de mercado, chafariz, carroça)

@@ -29,10 +29,10 @@ export class Cena1PacoReal implements Level {
   build(game: Game): void {
     const { scene, world } = game;
     scene.background = new THREE.Color(0x120d08);
-    scene.fog = new THREE.Fog(0x120d08, 18, 42);
+    scene.fog = new THREE.Fog(0x120d08, 24, 50);
 
     // ---------- Luz ----------
-    scene.add(new THREE.HemisphereLight(0xc9b48f, 0x2a1d10, 0.55));
+    scene.add(new THREE.HemisphereLight(0xd8c6a2, 0x4a3820, 1.0));
     const sun = new THREE.DirectionalLight(0xffe2b0, 1.6);
     sun.position.set(-10, 14, 4);
     sun.target.position.set(0, 0, -2);
