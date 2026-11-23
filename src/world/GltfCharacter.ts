@@ -21,7 +21,61 @@ export interface GltfLook {
   /** Partes com esqueleto igual (corpo com cara, cabelo, sobrancelhas) que passam a seguir os ossos do modelo. */
   parts?: string[];
   /** Objetos presos a um osso (ex.: espada na mão direita). */
-  attach?: { url: string; bone: string; position?: [number, number, number]; rotation?: [number, number, number]; size?: number }[];
+  attach?: { url?: string; object?: () => THREE.Object3D; bone: string; position?: [number, number, number]; rotation?: [number, number, number]; size?: number }[];
+  /** Esconder as malhas cujo nome corresponde (ex.: o capuz). */
+  hideMeshes?: RegExp;
+  /** Trocar a cor do tecido na textura (os tons verdes passam à cor pedida), só no material indicado. */
+  recolor?: { material: string; to: number };
+}
+
+/** Texturas já recoloridas, partilhadas entre personagens com a mesma cor. */
+const recolored = new Map<string, THREE.Texture>();
+
+/**
+ * Cópia da textura em que os píxeis verdes (o tecido da roupa Ranger) mudam de tom para `to`,
+ * mantendo a luz e a sombra do desenho original. Couro, metal e pele ficam como estão.
+ */
+function recolorTexture(map: THREE.Texture, to: number): THREE.Texture {
+  const key = `${map.uuid}:${to}`;
+  const hit = recolored.get(key);
+  if (hit) return hit;
+  const img = map.image as CanvasImageSource & { width: number; height: number };
+  const canvas = document.createElement('canvas');
+  canvas.width = img.width;
+  canvas.height = img.height;
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  if (!ctx || !img.width) return map;
+  ctx.drawImage(img, 0, 0);
+  const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const px = data.data;
+  const target = new THREE.Color(to);
+  const hsl = { h: 0, s: 0, l: 0 };
+  target.getHSL(hsl, THREE.SRGBColorSpace);
+  const tmp = new THREE.Color();
+  const rgb = { r: 0, g: 0, b: 0 };
+  for (let i = 0; i < px.length; i += 4) {
+    const r = px[i] / 255, g = px[i + 1] / 255, b = px[i + 2] / 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    if (max === 0 || g !== max || (max - min) / max < 0.25) continue; // só tons verdes saturados
+    const hue = (60 * ((b - r) / (max - min)) + 120) / 360;
+    if (hue < 0.2 || hue > 0.48) continue;
+    const l = (max + min) / 2;
+    // A luminosidade do tecido original (0,1–0,45) passa para perto da luminosidade da cor pedida.
+    tmp.setHSL(hsl.h, hsl.s, THREE.MathUtils.clamp(l * (hsl.l / 0.28), 0, 0.92), THREE.SRGBColorSpace);
+    tmp.getRGB(rgb, THREE.SRGBColorSpace);
+    px[i] = rgb.r * 255;
+    px[i + 1] = rgb.g * 255;
+    px[i + 2] = rgb.b * 255;
+  }
+  ctx.putImageData(data, 0, 0);
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.flipY = map.flipY;
+  tex.colorSpace = map.colorSpace;
+  tex.wrapS = map.wrapS;
+  tex.wrapT = map.wrapT;
+  tex.channel = map.channel;
+  recolored.set(key, tex);
+  return tex;
 }
 
 /** Nome "limpo" de uma animação: "CharacterArmature|Walk" ou "Female_Walk" passam a "Walk". */
@@ -138,6 +192,7 @@ export class GltfCharacter implements Avatar {
     model.traverse((o) => {
       const mesh = o as THREE.SkinnedMesh;
       if (!mesh.isMesh) return;
+      if (look.hideMeshes?.test(mesh.name)) mesh.visible = false;
       mesh.castShadow = true;
       mesh.receiveShadow = true;
       mesh.frustumCulled = false; // a caixa de um SkinnedMesh não acompanha a animação
@@ -146,6 +201,7 @@ export class GltfCharacter implements Avatar {
         const hex = look.colors?.[c.name];
         if (hex !== undefined) c.color.setHex(hex);
         if (look.hide?.includes(c.name)) c.visible = false;
+        if (look.recolor && c.name === look.recolor.material && c.map) c.map = recolorTexture(c.map, look.recolor.to);
         // Modelos com texturas (PBR) ficam como estão; os de cores lisas ganham o aspeto facetado.
         if (!c.map) {
           c.roughness = Math.max(c.roughness, 0.55);
@@ -180,7 +236,7 @@ export class GltfCharacter implements Avatar {
     model.updateMatrixWorld(true);
     for (const a of look.attach ?? []) {
       const bone = model.getObjectByName(a.bone);
-      const item = cache.get(a.url)?.scene.clone(true);
+      const item = a.object ? a.object() : a.url ? cache.get(a.url)?.scene.clone(true) : undefined;
       if (!bone || !item) continue;
       // Compensar a escala do esqueleto para o objeto ficar com o tamanho pedido (metros).
       const wb = new THREE.Vector3();

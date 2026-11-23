@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import type { Avatar } from './Avatar';
 import { Character, type CharacterLook } from './Character';
 import { GltfCharacter, hasModel } from './GltfCharacter';
@@ -34,6 +35,40 @@ const withAnims = (url: string) => hasModel(url) && hasModel(MODELS.anims);
 const darker = (hex: number, k = 0.72) =>
   (Math.round(((hex >> 16) & 255) * k) << 16) | (Math.round(((hex >> 8) & 255) * k) << 8) | Math.round((hex & 255) * k);
 
+/** Coroa de ouro com pontas (para prender à cabeça do rei). Medidas em metros. */
+function crown(): THREE.Object3D {
+  const gold = new THREE.MeshStandardMaterial({ color: 0xd4a52a, metalness: 0.85, roughness: 0.3 });
+  const g = new THREE.Group();
+  const band = new THREE.Mesh(new THREE.CylinderGeometry(0.105, 0.1, 0.05, 16, 1, true), gold);
+  band.material.side = THREE.DoubleSide;
+  g.add(band);
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * Math.PI * 2;
+    const tip = new THREE.Mesh(new THREE.ConeGeometry(0.018, 0.055, 4), gold);
+    tip.position.set(Math.sin(a) * 0.1, 0.05, Math.cos(a) * 0.1);
+    g.add(tip);
+  }
+  const ruby = new THREE.Mesh(new THREE.OctahedronGeometry(0.014), new THREE.MeshStandardMaterial({ color: 0xb0102a, roughness: 0.2 }));
+  ruby.position.set(0, 0, 0.106);
+  g.add(ruby);
+  g.traverse((o) => { o.castShadow = true; });
+  return g;
+}
+
+/** Elmo de ferro de aba larga (chapéu de ferro dos peões do séc. XIV). */
+function helmet(): THREE.Object3D {
+  const iron = new THREE.MeshStandardMaterial({ color: 0x8a8d92, metalness: 0.8, roughness: 0.4 });
+  const g = new THREE.Group();
+  const dome = new THREE.Mesh(new THREE.SphereGeometry(0.125, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), iron);
+  dome.scale.set(1, 1.05, 1.1);
+  const brim = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.2, 0.015, 20), iron);
+  const ridge = new THREE.Mesh(new THREE.BoxGeometry(0.012, 0.03, 0.27), iron);
+  ridge.position.y = 0.125;
+  g.add(dome, brim, ridge);
+  g.traverse((o) => { o.castShadow = true; });
+  return g;
+}
+
 /** Escudeiro do jogador (túnica azul). Sem o modelo, usa a personagem simples. */
 export function createSquire(): Avatar {
   if (withAnims(MODELS.squire)) {
@@ -62,6 +97,30 @@ export function castNpc(look: CharacterLook): Avatar {
   const pick = (url: string, colors: Record<string, number>, hide?: string[]) =>
     hasModel(url) ? new GltfCharacter(url, { colors, hide }) : new Character(look);
 
+  // Rei e guardas: a mesma roupa do escudeiro (pack Fantasy), sem capuz, com o tecido recolorido.
+  if ((look.crown || look.helmet) && withAnims(MODELS.squire)) {
+    if (look.crown) {
+      return new GltfCharacter(MODELS.squire, {
+        anims: MODELS.anims,
+        parts: [MODELS.bodyMale, MODELS.hairShort, MODELS.beard, MODELS.browsMale],
+        hideMeshes: /Hood|Pauldron/,
+        recolor: { material: 'MI_Ranger', to: look.cape ?? 0x1f3c8c },
+        attach: [{ object: crown, bone: 'Head', position: [0, 0.2, 0.015] }],
+      });
+    }
+    const tunic = look.tunic === 0x6b6b6b ? 0x8c1c1c : look.tunic;
+    return new GltfCharacter(MODELS.squire, {
+      anims: MODELS.anims,
+      parts: [MODELS.bodyMale, MODELS.beard, MODELS.browsMale],
+      hideMeshes: /Hood/,
+      recolor: { material: 'MI_Ranger', to: tunic },
+      attach: [
+        { object: helmet, bone: 'Head', position: [0, 0.15, 0.01] },
+        { url: MODELS.sword, bone: 'hand_r', rotation: [0.71, 0.02, 0.06], size: 0.95 },
+        { url: MODELS.shield, bone: 'spine_03', position: [-0.046, -0.138, -0.17], rotation: [2.93, -0.23, 1.67], size: 1 },
+      ],
+    });
+  }
   if (look.crown) return pick(MODELS.king, { Blue: look.cape ?? 0x1f3c8c });
   if (look.helmet) {
     // Guardas e soldados: o modelo do rei sem a coroa, com a túnica da cena.

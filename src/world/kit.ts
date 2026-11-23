@@ -42,6 +42,10 @@ export const KIT = {
   roof6x6: q('village/Roof_RoundTiles_6x6'),
   roof6x8: q('village/Roof_RoundTiles_6x8'),
   roof8x8: q('village/Roof_RoundTiles_8x8'),
+  // Empenas (triângulos de pedra que fecham a frente e as traseiras do telhado).
+  gable4: q('village/Roof_Front_Brick4'),
+  gable6: q('village/Roof_Front_Brick6'),
+  gable8: q('village/Roof_Front_Brick8'),
   campfire: k('nature/campfire_stones'),
   boat: k('pirate/boat-row-small'),
   ship: k('pirate/ship-large'),

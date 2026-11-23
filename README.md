@@ -129,10 +129,10 @@ docs/guiao.md    guião original
 
 | Recurso | Autor | Licença |
 |---|---|---|
-| Todas as personagens (`public/models/polypizza/*.glb`: rei, guardas, camponeses, aldeã, conselheiro, escudeiro...) | [Quaternius](https://quaternius.com), via [Poly Pizza](https://poly.pizza) | CC0 1.0 (ver `CREDITOS.txt` na mesma pasta) |
+| Conselheiros, mercadores e personagens de reserva (`public/models/polypizza/*.glb`) | [Quaternius](https://quaternius.com), via [Poly Pizza](https://poly.pizza) | CC0 1.0 (ver `CREDITOS.txt` na mesma pasta) |
 
 | Árvores, caixotes, barris, barcos, navios, bancas, chafariz e fogueiras (`public/models/kenney/`) | [Kenney](https://www.kenney.nl) (Nature, Pirate e Fantasy Town Kit) | CC0 1.0 (ver `CREDITOS.txt` e `LICENSE.txt` na mesma pasta) |
 
-| Escudeiro, camponeses, animações, casas modulares, texturas de pedra, árvores e adereços (`public/models/quaternius-fantasy/`, `public/textures/`) | [Quaternius](https://quaternius.com) (Modular Character Outfits – Fantasy, Universal Animation Library, Medieval Village, Fantasy Props e Stylized Nature MegaKit) | CC0 1.0 (ver `CREDITOS.txt`) |
+| Escudeiro, rei, guardas, camponeses, animações, casas modulares, texturas de pedra, árvores e adereços (`public/models/quaternius-fantasy/`, `public/textures/`) | [Quaternius](https://quaternius.com) (Modular Character Outfits – Fantasy, Universal Animation Library, Medieval Village, Fantasy Props e Stylized Nature MegaKit) | CC0 1.0 (ver `CREDITOS.txt`) |
 
 As tendas ainda são feitas com formas simples do Three.js (nenhum dos packs gratuitos tem tendas). Se um modelo não carregar, o jogo usa automaticamente a versão simples da personagem.

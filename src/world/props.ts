@@ -272,8 +272,39 @@ function modularHouse(w: number, d: number, h: number): THREE.Group | null {
       }
     }
   }
-  roof.position.y = storeys * MOD_H;
-  inner.add(roof);
+  // Interior escuro: os vãos das portas e janelas do kit são abertos e, sem isto,
+  // via-se o céu através da casa.
+  const hollow = new THREE.Mesh(new THREE.BoxGeometry(W - 0.66, storeys * MOD_H, D - 0.66), mat(0x1c140e, 1));
+  hollow.position.y = (storeys * MOD_H) / 2;
+  inner.add(hollow);
+  // Pilares de pedra nas quatro esquinas (tapam a junta entre as paredes).
+  for (const [sx, sz] of [[1, 1], [-1, 1], [1, -1], [-1, -1]]) {
+    for (let s = 0; s < storeys; s++) {
+      const c = kitRaw(KIT.corner);
+      if (!c) continue;
+      c.position.set((sx * W) / 2, s * MOD_H, (sz * D) / 2);
+      c.rotation.y = Math.atan2(sx, sz) - Math.PI / 4;
+      inner.add(c);
+    }
+  }
+  // Telhado e empenas. Nos telhados do kit a cumeeira corre ao longo de Z (largura x profundidade);
+  // numa planta mais larga do que funda (8 x 6) o telhado 6 x 8 roda 90°.
+  const top = new THREE.Group();
+  top.position.y = storeys * MOD_H;
+  const turned = W > D;
+  if (turned) top.rotation.y = Math.PI / 2;
+  const span = turned ? D : W; // largura sob o telhado (onde assenta a empena)
+  const run = turned ? W : D; // comprimento da cumeeira
+  top.add(roof);
+  const gableUrl = span <= 4 ? KIT.gable4 : span <= 6 ? KIT.gable6 : KIT.gable8;
+  for (const [z, rot] of [[run / 2, 0], [-run / 2, Math.PI]] as const) {
+    const gable = kitRaw(gableUrl);
+    if (!gable) continue;
+    gable.position.z = z;
+    gable.rotation.y = rot;
+    top.add(gable);
+  }
+  inner.add(top);
   if (houseCount % 2 === 0) {
     const ch = kitRaw(KIT.chimney);
     if (ch) {
