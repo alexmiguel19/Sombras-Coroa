@@ -11,7 +11,17 @@ export const MODELS = {
   noble: `${base}models/polypizza/Adventurer1.glb`,
   commoner: `${base}models/polypizza/Adventurer2.glb`,
   woman: `${base}models/polypizza/WomanDress.glb`,
+  // Quaternius (CC0): Modular Character Outfits – Fantasy, Universal Animation Library e Fantasy Props MegaKit
+  squire: `${base}models/quaternius-fantasy/Squire.glb`,
+  peasantMale: `${base}models/quaternius-fantasy/MalePeasant.glb`,
+  peasantFemale: `${base}models/quaternius-fantasy/FemalePeasant.glb`,
+  anims: `${base}models/quaternius-fantasy/Animations.glb`,
+  sword: `${base}models/quaternius-fantasy/props/Sword_Bronze.glb`,
+  shield: `${base}models/quaternius-fantasy/props/Shield_Wooden.glb`,
 };
+
+/** Modelo com as animações partilhadas, se tudo carregou. */
+const withAnims = (url: string) => hasModel(url) && hasModel(MODELS.anims);
 
 /** Tom um pouco mais escuro da mesma cor (para segundas peças de roupa). */
 const darker = (hex: number, k = 0.72) =>
@@ -19,6 +29,16 @@ const darker = (hex: number, k = 0.72) =>
 
 /** Escudeiro do jogador (túnica azul). Sem o modelo, usa a personagem simples. */
 export function createSquire(): Avatar {
+  if (withAnims(MODELS.squire)) {
+    // Escudeiro de capuz e couro, com espada na mão direita e escudo às costas.
+    return new GltfCharacter(MODELS.squire, {
+      anims: MODELS.anims,
+      attach: [
+        { url: MODELS.sword, bone: 'hand_r', rotation: [0.71, 0.02, 0.06], size: 0.95 },
+        { url: MODELS.shield, bone: 'spine_03', position: [-0.046, -0.138, -0.17], rotation: [2.93, -0.23, 1.67], size: 1 },
+      ],
+    });
+  }
   if (hasModel(MODELS.commoner)) {
     return new GltfCharacter(MODELS.commoner, { colors: { Green: 0x2f5d8a, LightGreen: 0x4a7aa8, Hair_Brown: 0x6b3f1d } });
   }
@@ -39,6 +59,11 @@ export function castNpc(look: CharacterLook): Avatar {
     // Guardas e soldados: o modelo do rei sem a coroa, com a túnica da cena.
     const tunic = look.tunic === 0x6b6b6b ? 0x8c1c1c : look.tunic;
     return pick(MODELS.king, { Blue: tunic, Hair_White: 0x3a2a1a }, ['Gold']);
+  }
+  // Camponeses e aldeãs: modelos detalhados do pack Fantasy (mesmo estilo do escudeiro).
+  if (look.hat === 0x9a8040 && withAnims(MODELS.peasantMale)) return new GltfCharacter(MODELS.peasantMale, { anims: MODELS.anims });
+  if (look.hat === undefined && look.beard === undefined && withAnims(MODELS.peasantFemale)) {
+    return new GltfCharacter(MODELS.peasantFemale, { anims: MODELS.anims });
   }
   if (look.hat === 0x9a8040) return pick(MODELS.farmer, { LightBlue: darker(look.tunic, 0.6), Brown2: look.tunic });
   if (look.hat === undefined && look.beard === undefined) return pick(MODELS.woman, { Dress: look.tunic });

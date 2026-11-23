@@ -3,24 +3,65 @@ import { getModel } from './GltfCharacter';
 
 const base = import.meta.env.BASE_URL;
 const k = (path: string) => `${base}models/kenney/${path}.glb`;
+const q = (path: string) => `${base}models/quaternius-fantasy/${path}.glb`;
 
-/** Adereços do cenário (packs CC0 de Kenney: Nature, Pirate e Fantasy Town Kit). */
+/**
+ * Adereços do cenário (CC0): Quaternius (Stylized Nature, Fantasy Props e Medieval Village MegaKit)
+ * e Kenney (barcos, navios, chafariz e fogueira).
+ */
 export const KIT = {
-  oak: k('nature/tree_oak'),
-  tree: k('nature/tree_default'),
-  pine: k('nature/tree_pineTallA'),
-  pineRound: k('nature/tree_pineRoundC'),
-  rock: k('nature/rock_largeA'),
+  oak: q('nature/CommonTree_1'),
+  tree: q('nature/CommonTree_2'),
+  tree3: q('nature/CommonTree_3'),
+  pine: q('nature/Pine_1'),
+  pineRound: q('nature/Pine_2'),
+  pine3: q('nature/Pine_3'),
+  rock: q('nature/Rock_Medium_1'),
+  rock2: q('nature/Rock_Medium_2'),
+  bush: q('nature/Bush_Common'),
+  barrel: q('props/Barrel'),
+  crate: q('props/Crate_Wooden'),
+  stallRed: q('props/Stall_Empty'),
+  stallGreen: q('props/Stall_Cart_Empty'),
+  torch: q('props/Torch_Metal'),
+  weaponStand: q('props/WeaponStand'),
+  table: q('props/Table_Large'),
+  bench: q('props/Bench'),
+  scroll: q('props/Scroll_1'),
+  wagon: q('village/Prop_Wagon'),
+  fence: q('village/Prop_WoodenFence_Single'),
+  chimney: q('village/Prop_Chimney'),
+  wallBrick: q('village/Wall_UnevenBrick_Straight'),
+  wallBrickDoor: q('village/Wall_UnevenBrick_Door_Round'),
+  wallBrickWindow: q('village/Wall_UnevenBrick_Window_Wide_Round'),
+  wallPlaster: q('village/Wall_Plaster_Straight'),
+  wallPlasterDoor: q('village/Wall_Plaster_Door_Round'),
+  wallPlasterWindow: q('village/Wall_Plaster_Window_Wide_Round'),
+  corner: q('village/Corner_Exterior_Brick'),
+  roof4x4: q('village/Roof_RoundTiles_4x4'),
+  roof6x6: q('village/Roof_RoundTiles_6x6'),
+  roof6x8: q('village/Roof_RoundTiles_6x8'),
+  roof8x8: q('village/Roof_RoundTiles_8x8'),
   campfire: k('nature/campfire_stones'),
-  barrel: k('pirate/barrel'),
-  crate: k('pirate/crate'),
   boat: k('pirate/boat-row-small'),
   ship: k('pirate/ship-large'),
-  stallRed: k('town/stall-red'),
-  stallGreen: k('town/stall-green'),
   fountain: k('town/fountain-round'),
   cart: k('town/cart'),
 };
+
+/** Cópia simples (sem reescalar) de um modelo do kit, com sombras; null se não carregou. */
+export function kitRaw(url: string): THREE.Object3D | null {
+  const gltf = getModel(url);
+  if (!gltf) return null;
+  const m = gltf.scene.clone(true);
+  m.traverse((o) => {
+    if ((o as THREE.Mesh).isMesh) {
+      o.castShadow = true;
+      o.receiveShadow = true;
+    }
+  });
+  return m;
+}
 
 export interface Fit {
   /** Altura final (m). */

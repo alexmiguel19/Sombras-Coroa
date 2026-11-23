@@ -33,7 +33,28 @@ function shade(base: [number, number, number], v: number): string {
 }
 
 /** Lajes de pedra para o chão. */
-export function stoneFloor(repeat: [number, number]): THREE.CanvasTexture {
+/** Textura fotográfica de pedra (Quaternius, CC0) que se repete; cada chamada partilha a mesma imagem. */
+const photoCache = new Map<string, THREE.Texture>();
+function photo(file: string, repeat: [number, number]): THREE.Texture {
+  let base = photoCache.get(file);
+  if (!base) {
+    base = new THREE.TextureLoader().load(`${import.meta.env.BASE_URL}textures/${file}`);
+    base.colorSpace = THREE.SRGBColorSpace;
+    base.anisotropy = 4;
+    photoCache.set(file, base);
+  }
+  const t = base.clone();
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.repeat.set(repeat[0], repeat[1]);
+  return t;
+}
+
+/** Chão de lajes de pedra. */
+export function stoneFloor(repeat: [number, number]): THREE.Texture {
+  return photo('brick_basecolor.jpg', [repeat[0] * 2, repeat[1] * 2]);
+}
+
+export function stoneFloorCanvas(repeat: [number, number]): THREE.CanvasTexture {
   return canvasTexture(512, 512, (g) => {
     const r = rng(7);
     g.fillStyle = '#4a4036';
@@ -55,7 +76,11 @@ export function stoneFloor(repeat: [number, number]): THREE.CanvasTexture {
 }
 
 /** Paredes de blocos de pedra. */
-export function stoneWall(repeat: [number, number]): THREE.CanvasTexture {
+export function stoneWall(repeat: [number, number]): THREE.Texture {
+  return photo('unevenbrick_basecolor.jpg', [repeat[0] * 2, repeat[1] * 2]);
+}
+
+export function stoneWallCanvas(repeat: [number, number]): THREE.CanvasTexture {
   return canvasTexture(512, 512, (g) => {
     const r = rng(42);
     g.fillStyle = '#3b342c';

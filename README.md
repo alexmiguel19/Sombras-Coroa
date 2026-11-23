@@ -133,4 +133,6 @@ docs/guiao.md    guião original
 
 | Árvores, caixotes, barris, barcos, navios, bancas, chafariz e fogueiras (`public/models/kenney/`) | [Kenney](https://www.kenney.nl) (Nature, Pirate e Fantasy Town Kit) | CC0 1.0 (ver `CREDITOS.txt` e `LICENSE.txt` na mesma pasta) |
 
-Os edifícios, muralhas e tendas ainda são feitos com formas simples do Three.js. Se um modelo não carregar, o jogo usa automaticamente a versão simples da personagem.
+| Escudeiro, camponeses, animações, casas modulares, texturas de pedra, árvores e adereços (`public/models/quaternius-fantasy/`, `public/textures/`) | [Quaternius](https://quaternius.com) (Modular Character Outfits – Fantasy, Universal Animation Library, Medieval Village, Fantasy Props e Stylized Nature MegaKit) | CC0 1.0 (ver `CREDITOS.txt`) |
+
+As tendas ainda são feitas com formas simples do Three.js (nenhum dos packs gratuitos tem tendas). Se um modelo não carregar, o jogo usa automaticamente a versão simples da personagem.

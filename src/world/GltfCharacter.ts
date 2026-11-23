@@ -16,12 +16,20 @@ export interface GltfLook {
   colors?: Record<string, number>;
   /** Esconder as partes do modelo com estes materiais (ex.: a coroa do rei nos guardas). */
   hide?: string[];
+  /** Ficheiro com as animações, quando o modelo não as traz (ex.: Universal Animation Library). */
+  anims?: string;
+  /** Objetos presos a um osso (ex.: espada na mão direita). */
+  attach?: { url: string; bone: string; position?: [number, number, number]; rotation?: [number, number, number]; size?: number }[];
 }
 
 /** Nome "limpo" de uma animação: "CharacterArmature|Walk" ou "Female_Walk" passam a "Walk". */
 function clipName(name: string): string {
-  return name.replace(/^.*\|/, '').replace(/^(Female|Man)_/, '');
+  const n = name.replace(/^.*\|/, '').replace(/^(Female|Man)_/, '');
+  return RENAME[n] ?? n.replace(/_Loop$/, '');
 }
+
+/** Nomes da Universal Animation Library (Quaternius) para os nomes usados no jogo. */
+const RENAME: Record<string, string> = { Jog_Fwd_Loop: 'Run', PickUp_Table: 'PickUp', Idle_Talking_Loop: 'Talk' };
 
 /** Animações equivalentes entre packs (o pedido da esquerda usa a da direita se faltar). */
 const ALIASES: Record<string, string> = { PickUp: 'Interact' };
@@ -62,7 +70,7 @@ export class GltfCharacter implements Avatar {
   readonly root = new THREE.Group();
   private mixer: THREE.AnimationMixer;
   private actions = new Map<string, THREE.AnimationAction>();
-  private locomotion: 'Idle' | 'Walk' | 'Run' = 'Idle';
+  private locomotion = 'Idle';
   private oneShot: THREE.AnimationAction | null = null;
   private head: THREE.Object3D | null = null;
   private talkTime = 0;
@@ -85,8 +93,11 @@ export class GltfCharacter implements Avatar {
         const hex = look.colors?.[c.name];
         if (hex !== undefined) c.color.setHex(hex);
         if (look.hide?.includes(c.name)) c.visible = false;
-        c.roughness = Math.max(c.roughness, 0.55);
-        c.flatShading = true;
+        // Modelos com texturas (PBR) ficam como estão; os de cores lisas ganham o aspeto facetado.
+        if (!c.map) {
+          c.roughness = Math.max(c.roughness, 0.55);
+          c.flatShading = true;
+        }
         return c;
       });
       mesh.material = Array.isArray(mesh.material) ? mats : mats[0];
@@ -111,13 +122,28 @@ export class GltfCharacter implements Avatar {
 
     this.head = model.getObjectByName('Head') ?? null;
     this.mixer = new THREE.AnimationMixer(model);
-    for (const clip of gltf.animations) this.actions.set(clipName(clip.name), this.mixer.clipAction(clip));
+    const clips = look.anims ? cache.get(look.anims)?.animations ?? [] : gltf.animations;
+    for (const clip of clips) this.actions.set(clipName(clip.name), this.mixer.clipAction(clip));
+    model.updateMatrixWorld(true);
+    for (const a of look.attach ?? []) {
+      const bone = model.getObjectByName(a.bone);
+      const item = cache.get(a.url)?.scene.clone(true);
+      if (!bone || !item) continue;
+      // Compensar a escala do esqueleto para o objeto ficar com o tamanho pedido (metros).
+      const wb = new THREE.Vector3();
+      bone.getWorldScale(wb);
+      item.scale.setScalar((a.size ?? 1) / (wb.x || 1));
+      if (a.position) item.position.set(...a.position).divideScalar(wb.x || 1);
+      if (a.rotation) item.rotation.set(...a.rotation);
+      item.traverse((o) => { if ((o as THREE.Mesh).isMesh) o.castShadow = true; });
+      bone.add(item);
+    }
     this.actions.get('Idle')?.play();
   }
 
   update(dt: number, speed: number): void {
     // Escolher a animação de locomoção
-    const want = speed < 0.25 ? 'Idle' : speed < 4.3 ? 'Walk' : 'Run';
+    const want = speed < 0.25 ? (this.talkTime > 0 && this.actions.has('Talk') ? 'Talk' : 'Idle') : speed < 4.3 ? 'Walk' : 'Run';
     if (want !== this.locomotion && !this.oneShot) this.fadeTo(want);
     const walk = this.actions.get('Walk');
     const run = this.actions.get('Run');
@@ -176,7 +202,7 @@ export class GltfCharacter implements Avatar {
     });
   }
 
-  private fadeTo(name: 'Idle' | 'Walk' | 'Run'): void {
+  private fadeTo(name: string): void {
     const from = this.actions.get(this.locomotion);
     const to = this.actions.get(name);
     if (!to) return;

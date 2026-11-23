@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import { royalBanner, castileBanner, tentCloth } from './textures';
-import { KIT, kitModel } from './kit';
+import { royalBanner, castileBanner, tentCloth, stoneWall } from './textures';
+import { KIT, kitModel, kitRaw } from './kit';
 
 /**
  * Adereços reutilizáveis entre cenas (exterior medieval).
@@ -110,8 +110,8 @@ export function campfire(withLight = true): { group: THREE.Group; light: THREE.P
 
 /** Árvore low-poly (pinheiro ou carvalho). */
 export function tree(kind: 'pine' | 'oak', scale = 1): THREE.Group {
-  const urls = kind === 'pine' ? [KIT.pine, KIT.pineRound] : [KIT.oak, KIT.tree];
-  const kitTree = kitModel(urls[variant++ % 2], { height: (kind === 'pine' ? 6 : 5) * scale });
+  const urls = kind === 'pine' ? [KIT.pine, KIT.pineRound, KIT.pine3] : [KIT.oak, KIT.tree, KIT.tree3];
+  const kitTree = kitModel(urls[variant++ % 3], { height: (kind === 'pine' ? 6 : 5) * scale });
   if (kitTree) return kitTree;
   const g = new THREE.Group();
   const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.25, 2, 6), mat(0x5a3a1a));
@@ -175,6 +175,8 @@ export function barrel(): THREE.Object3D {
 
 /** Suporte de lanças. */
 export function spearRack(): THREE.Group {
+  const k = kitModel(KIT.weaponStand, { length: 1.7 });
+  if (k) return k;
   const g = new THREE.Group();
   const wood = mat(0x5a3a1a);
   const bar = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.1, 0.1), wood);
@@ -199,6 +201,8 @@ export function spearRack(): THREE.Group {
 
 /** Casa caiada com telhado de telha (vilas do Sul). `w` = largura (X), `d` = profundidade (Z). */
 export function house(w = 4, d = 3.5, h = 2.6): THREE.Group {
+  const modular = modularHouse(w, d, h);
+  if (modular) return modular;
   const g = new THREE.Group();
   const walls = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(0xe9e3d3, 0.95));
   walls.position.y = h / 2;
@@ -216,10 +220,76 @@ export function house(w = 4, d = 3.5, h = 2.6): THREE.Group {
   return shadows(g);
 }
 
+/** Módulos da Medieval Village MegaKit: paredes de 2 m de largura e 3,12 m de altura. */
+const MOD_W = 2;
+const MOD_H = 3.12;
+/** Telhados prontos que existem no kit (largura x profundidade, em metros). */
+const ROOFS: [number, number, string][] = [
+  [4, 4, KIT.roof4x4], [6, 6, KIT.roof6x6], [6, 8, KIT.roof6x8], [8, 6, KIT.roof6x8], [8, 8, KIT.roof8x8],
+];
+let houseCount = 0;
+
+/**
+ * Casa montada com módulos (paredes de pedra ou reboco, porta, janelas e telhado de telha).
+ * A porta fica na fachada da frente (+Z). A casa é escalada para ocupar exatamente w x d,
+ * para coincidir com as colisões definidas nas cenas. Devolve null se os módulos não carregaram.
+ */
+function modularHouse(w: number, d: number, h: number): THREE.Group | null {
+  // Escolher o telhado (e por isso as medidas da planta) mais próximo do pedido.
+  const [W, D, roofUrl] = ROOFS.reduce((a, b) => (Math.hypot(b[0] - w, b[1] - d) < Math.hypot(a[0] - w, a[1] - d) ? b : a));
+  const roof = kitRaw(roofUrl);
+  if (!roof) return null;
+  const storeys = h >= 4.4 ? 2 : 1;
+  const plaster = houseCount++ % 3 === 1;
+  const g = new THREE.Group();
+  const inner = new THREE.Group();
+  g.add(inner);
+
+  const sides = [
+    { len: W, x: 0, z: D / 2, rot: 0, front: true },
+    { len: W, x: 0, z: -D / 2, rot: Math.PI, front: false },
+    { len: D, x: W / 2, z: 0, rot: Math.PI / 2, front: false },
+    { len: D, x: -W / 2, z: 0, rot: -Math.PI / 2, front: false },
+  ];
+  for (let s = 0; s < storeys; s++) {
+    const upper = s > 0 || plaster;
+    for (const side of sides) {
+      const n = Math.round(side.len / MOD_W);
+      for (let i = 0; i < n; i++) {
+        const middle = i === Math.floor(n / 2);
+        let url: string;
+        if (s === 0 && side.front && middle) url = upper ? KIT.wallPlasterDoor : KIT.wallBrickDoor;
+        else if ((i + s) % 2 === 1 || (side.front && !middle)) url = upper ? KIT.wallPlasterWindow : KIT.wallBrickWindow;
+        else url = upper ? KIT.wallPlaster : KIT.wallBrick;
+        const m = kitRaw(url);
+        if (!m) continue;
+        const along = -side.len / 2 + MOD_W / 2 + i * MOD_W;
+        const c = Math.cos(side.rot);
+        const sn = Math.sin(side.rot);
+        m.position.set(side.x + along * c, s * MOD_H, side.z - along * sn);
+        m.rotation.y = side.rot;
+        inner.add(m);
+      }
+    }
+  }
+  roof.position.y = storeys * MOD_H;
+  inner.add(roof);
+  if (houseCount % 2 === 0) {
+    const ch = kitRaw(KIT.chimney);
+    if (ch) {
+      ch.position.set(W / 4, storeys * MOD_H + 0.6, -D / 4);
+      inner.add(ch);
+    }
+  }
+  g.scale.set(w / W, 1, d / D);
+  return g;
+}
+
 /** Castelo simples: muralha quadrada com quatro torres e ameias. `size` = lado em metros. */
 export function castle(size = 14, wallH = 5, color = 0xb5a88e): THREE.Group {
   const g = new THREE.Group();
-  const stone = mat(color, 0.95);
+  // Pedra fotográfica (mesma textura das muralhas), tingida pela cor pedida.
+  const stone = new THREE.MeshStandardMaterial({ map: stoneWall([size / 8, wallH / 6]), color: new THREE.Color(color).lerp(new THREE.Color(0xffffff), 0.55), roughness: 0.95 });
   const merlon = new THREE.BoxGeometry(0.6, 0.6, 0.6);
   const half = size / 2;
   for (const [x, z, w, d] of [[0, -half, size, 1], [0, half, size, 1], [-half, 0, 1, size], [half, 0, 1, size]] as const) {

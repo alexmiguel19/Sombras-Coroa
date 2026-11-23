@@ -1,0 +1,7 @@
+Modelos e texturas — autor: Quaternius (https://quaternius.com), licença CC0 1.0 (ver LICENSE.txt)
+Obtidos em https://quaternius.itch.io (versões Standard, gratuitas), convertidos para GLB com texturas reduzidas.
+- Squire.glb, MalePeasant.glb, FemalePeasant.glb  Modular Character Outfits – Fantasy (Male_Ranger, Male/Female_Peasant)
+- Animations.glb                                   Universal Animation Library (Idle, Walk, Jog, Interact, PickUp, Talking, Sword_Idle)
+- props/                                           Fantasy Props MegaKit (espada, escudo, barril, caixote, bancas, suporte de armas...)
+- village/  e  ../../textures/*.jpg                Medieval Village MegaKit (paredes, portas, janelas, telhados; texturas de pedra)
+- nature/                                          Stylized Nature MegaKit (árvores, pinheiros, rochas, arbustos)
