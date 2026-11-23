@@ -36,6 +36,37 @@ const RENAME: Record<string, string> = { Jog_Fwd_Loop: 'Run', PickUp_Table: 'Pic
 /** Animações equivalentes entre packs (o pedido da esquerda usa a da direita se faltar). */
 const ALIASES: Record<string, string> = { PickUp: 'Interact' };
 
+/**
+ * Das partes extra só interessa a cabeça (cara, olhos, cabelo): o corpo base é mais largo do que
+ * a roupa e atravessá-la-ia. Ficam apenas os triângulos cujos vértices seguem sobretudo a cabeça
+ * ou o pescoço; o resto do corpo é retirado (a roupa já tem braços, mãos e pernas).
+ */
+function keepOnlyHead(sk: THREE.SkinnedMesh): void {
+  const geo = sk.geometry;
+  const idx = geo.getIndex();
+  const si = geo.getAttribute('skinIndex');
+  const sw = geo.getAttribute('skinWeight');
+  if (!idx || !si || !sw) return;
+  const keepBone = sk.skeleton.bones.map((b) => /^(head|neck_\d+)$/i.test(b.name) || /^(eye|jaw|lip|brow|cheek|nose|ear)/i.test(b.name));
+  const vertexOnHead = (v: number) => {
+    let best = 0;
+    let bone = si.getX(v);
+    for (let k = 0; k < 4; k++) {
+      const w = sw.getComponent(v, k);
+      if (w > best) { best = w; bone = si.getComponent(v, k); }
+    }
+    return keepBone[bone];
+  };
+  const kept: number[] = [];
+  for (let i = 0; i < idx.count; i += 3) {
+    const a = idx.getX(i), b = idx.getX(i + 1), c = idx.getX(i + 2);
+    if (vertexOnHead(a) && vertexOnHead(b) && vertexOnHead(c)) kept.push(a, b, c);
+  }
+  if (kept.length === idx.count) return;
+  sk.geometry = geo.clone();
+  sk.geometry.setIndex(kept);
+}
+
 /** Modelos já carregados, partilhados entre personagens. */
 const cache = new Map<string, GLTF>();
 
@@ -97,6 +128,7 @@ export class GltfCharacter implements Avatar {
       const meshes: THREE.SkinnedMesh[] = [];
       copy.traverse((o) => { if ((o as THREE.SkinnedMesh).isSkinnedMesh) meshes.push(o as THREE.SkinnedMesh); });
       for (const sk of meshes) {
+        keepOnlyHead(sk);
         const bones = sk.skeleton.bones.map((b) => (model.getObjectByName(b.name) as THREE.Bone) ?? b);
         sk.bind(new THREE.Skeleton(bones, sk.skeleton.boneInverses), sk.bindMatrix);
         anchor.add(sk);
