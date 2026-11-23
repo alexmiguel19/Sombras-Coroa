@@ -316,6 +316,85 @@ function modularHouse(w: number, d: number, h: number): THREE.Group | null {
   return g;
 }
 
+/**
+ * Campo de trigo: terra lavrada, espigas douradas em linhas (uma só malha instanciada) e cerca
+ * de madeira à volta, com uma abertura a meio do lado da frente (+Z). `w` x `d` em metros.
+ */
+export function wheatField(w: number, d: number, seed = 1): THREE.Group {
+  const g = new THREE.Group();
+  const soil = new THREE.Mesh(new THREE.PlaneGeometry(w, d), mat(0x6e5434, 1));
+  soil.rotation.x = -Math.PI / 2;
+  soil.position.y = 0.02;
+  soil.receiveShadow = true;
+  g.add(soil);
+
+  // Cada espiga: caule fino + cabeça, juntos numa geometria.
+  const stalk = new THREE.CylinderGeometry(0.012, 0.018, 0.9, 3);
+  stalk.translate(0, 0.45, 0);
+  const ear = new THREE.ConeGeometry(0.04, 0.22, 4);
+  ear.translate(0, 0.98, 0);
+  const merged = mergeTwo(stalk, ear);
+  const rows = Math.floor(d / 0.35);
+  const perRow = Math.floor(w / 0.22);
+  const mesh = new THREE.InstancedMesh(merged, new THREE.MeshStandardMaterial({ color: 0xd9b54a, roughness: 0.9, flatShading: true }), rows * perRow);
+  let s = seed * 9973;
+  const rnd = () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646;
+  const m = new THREE.Matrix4();
+  const q = new THREE.Quaternion();
+  const e = new THREE.Euler();
+  const color = new THREE.Color();
+  let i = 0;
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < perRow; c++) {
+      const x = -w / 2 + 0.15 + c * 0.22 + (rnd() - 0.5) * 0.12;
+      const z = -d / 2 + 0.2 + r * 0.35 + (rnd() - 0.5) * 0.1;
+      e.set((rnd() - 0.5) * 0.35, rnd() * Math.PI, (rnd() - 0.5) * 0.35);
+      const k = 0.75 + rnd() * 0.45;
+      m.compose(new THREE.Vector3(x, 0, z), q.setFromEuler(e), new THREE.Vector3(k, k, k));
+      mesh.setMatrixAt(i, m);
+      mesh.setColorAt(i, color.setHSL(0.12 + rnd() * 0.03, 0.55, 0.5 + rnd() * 0.12));
+      i++;
+    }
+  }
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  g.add(mesh);
+
+  // Cerca de madeira (módulos do kit) à volta, com entrada a meio da frente.
+  const fenceAt = (x: number, z: number, rot: number) => {
+    const f = kitModel(KIT.fence, { length: 2 });
+    if (!f) return;
+    f.position.set(x, 0, z);
+    f.rotation.y = rot;
+    g.add(f);
+  };
+  for (let x = -w / 2 + 1; x < w / 2; x += 2) {
+    if (Math.abs(x) > 1.2) fenceAt(x, d / 2 + 0.3, 0);
+    fenceAt(x, -d / 2 - 0.3, 0);
+  }
+  for (let z = -d / 2 + 1; z < d / 2; z += 2) {
+    fenceAt(-w / 2 - 0.3, z, Math.PI / 2);
+    fenceAt(w / 2 + 0.3, z, Math.PI / 2);
+  }
+  return g;
+}
+
+/** Junta duas geometrias não indexadas numa só (para instanciar). */
+function mergeTwo(a: THREE.BufferGeometry, b: THREE.BufferGeometry): THREE.BufferGeometry {
+  const A = a.toNonIndexed();
+  const B = b.toNonIndexed();
+  const out = new THREE.BufferGeometry();
+  for (const name of ['position', 'normal'] as const) {
+    const x = A.getAttribute(name).array as Float32Array;
+    const y = B.getAttribute(name).array as Float32Array;
+    const arr = new Float32Array(x.length + y.length);
+    arr.set(x);
+    arr.set(y, x.length);
+    out.setAttribute(name, new THREE.BufferAttribute(arr, 3));
+  }
+  return out;
+}
+
 /** Castelo simples: muralha quadrada com quatro torres e ameias. `size` = lado em metros. */
 export function castle(size = 14, wallH = 5, color = 0xb5a88e): THREE.Group {
   const g = new THREE.Group();

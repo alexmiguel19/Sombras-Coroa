@@ -2,7 +2,8 @@ import * as THREE from 'three';
 import type { Game, Level, Npc } from '../../engine/Game';
 import { castNpc } from '../../world/cast';
 import { dirt, grass, stoneWall } from '../../world/textures';
-import { animateMarker, banner, barrel, crate, house, marker, tree } from '../../world/props';
+import { animateMarker, banner, barrel, crate, house, marker, tree, wheatField } from '../../world/props';
+import { KIT, kitModel } from '../../world/kit';
 import { escapeHtml } from '../../ui/UI';
 import texto from '../../story/cenario2/cena1.json';
 import type { CenaTexto } from '../../story/types';
@@ -57,13 +58,26 @@ export class Cena1PortasVila implements Level {
     road.position.set(0, 0.012, WALL_Z + 20);
     road.receiveShadow = true;
     scene.add(road);
-    // Campos de trigo (faixas douradas)
-    const wheat = new THREE.MeshStandardMaterial({ color: 0xd2b25a, roughness: 1, flatShading: true });
+    // Campos de trigo com cerca
+    let n = 0;
     for (const [x, z, w, d] of [[-14, 10, 10, 8], [13, 14, 9, 10], [-7, 22, 8, 6]]) {
-      const f = new THREE.Mesh(new THREE.BoxGeometry(w, 0.5, d, 8, 1, 8), wheat);
-      f.position.set(x, 0.25, z);
-      f.receiveShadow = true;
+      const f = wheatField(w, d, ++n);
+      f.position.set(x, 0, z);
       scene.add(f);
+    }
+    // Casas dos lavradores fora da muralha, viradas para o caminho
+    for (const [x, z, rot] of [[-22, 5, Math.PI / 2], [21, 11, -Math.PI / 2], [7, 22, -Math.PI / 2]] as const) {
+      const h = house(5, 4, 3.4);
+      h.position.set(x, 0, z);
+      h.rotation.y = rot;
+      scene.add(h);
+      world.addRect(x, z, 4, 5);
+    }
+    const cart = kitModel(KIT.wagon, { length: 3.2, alongZ: true });
+    if (cart) {
+      cart.position.set(-2.8, 0, 9);
+      scene.add(cart);
+      world.addRect(-2.8, 9, 1.6, 3.2);
     }
 
     // ---------- Muralha, porta e torres ----------
