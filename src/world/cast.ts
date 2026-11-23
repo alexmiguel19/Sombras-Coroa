@@ -16,6 +16,13 @@ export const MODELS = {
   peasantMale: `${base}models/quaternius-fantasy/MalePeasant.glb`,
   peasantFemale: `${base}models/quaternius-fantasy/FemalePeasant.glb`,
   anims: `${base}models/quaternius-fantasy/Animations.glb`,
+  bodyMale: `${base}models/quaternius-fantasy/parts/Superhero_Male_FullBody.glb`,
+  bodyFemale: `${base}models/quaternius-fantasy/parts/Superhero_Female_FullBody.glb`,
+  hairShort: `${base}models/quaternius-fantasy/parts/Hair_SimpleParted.glb`,
+  hairLong: `${base}models/quaternius-fantasy/parts/Hair_Long.glb`,
+  beard: `${base}models/quaternius-fantasy/parts/Hair_Beard.glb`,
+  browsMale: `${base}models/quaternius-fantasy/parts/Eyebrows_Regular.glb`,
+  browsFemale: `${base}models/quaternius-fantasy/parts/Eyebrows_Female.glb`,
   sword: `${base}models/quaternius-fantasy/props/Sword_Bronze.glb`,
   shield: `${base}models/quaternius-fantasy/props/Shield_Wooden.glb`,
 };
@@ -32,6 +39,7 @@ export function createSquire(): Avatar {
   if (withAnims(MODELS.squire)) {
     // Escudeiro de capuz e couro, com espada na mão direita e escudo às costas.
     return new GltfCharacter(MODELS.squire, {
+      parts: [MODELS.bodyMale, MODELS.browsMale],
       anims: MODELS.anims,
       attach: [
         { url: MODELS.sword, bone: 'hand_r', rotation: [0.71, 0.02, 0.06], size: 0.95 },
@@ -61,9 +69,9 @@ export function castNpc(look: CharacterLook): Avatar {
     return pick(MODELS.king, { Blue: tunic, Hair_White: 0x3a2a1a }, ['Gold']);
   }
   // Camponeses e aldeãs: modelos detalhados do pack Fantasy (mesmo estilo do escudeiro).
-  if (look.hat === 0x9a8040 && withAnims(MODELS.peasantMale)) return new GltfCharacter(MODELS.peasantMale, { anims: MODELS.anims });
+  if (look.hat === 0x9a8040 && withAnims(MODELS.peasantMale)) return new GltfCharacter(MODELS.peasantMale, { anims: MODELS.anims, parts: [MODELS.bodyMale, MODELS.hairShort, MODELS.beard, MODELS.browsMale] });
   if (look.hat === undefined && look.beard === undefined && withAnims(MODELS.peasantFemale)) {
-    return new GltfCharacter(MODELS.peasantFemale, { anims: MODELS.anims });
+    return new GltfCharacter(MODELS.peasantFemale, { anims: MODELS.anims, parts: [MODELS.bodyFemale, MODELS.hairLong, MODELS.browsFemale] });
   }
   if (look.hat === 0x9a8040) return pick(MODELS.farmer, { LightBlue: darker(look.tunic, 0.6), Brown2: look.tunic });
   if (look.hat === undefined && look.beard === undefined) return pick(MODELS.woman, { Dress: look.tunic });

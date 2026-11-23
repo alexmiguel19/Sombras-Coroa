@@ -18,6 +18,8 @@ export interface GltfLook {
   hide?: string[];
   /** Ficheiro com as animações, quando o modelo não as traz (ex.: Universal Animation Library). */
   anims?: string;
+  /** Partes com esqueleto igual (corpo com cara, cabelo, sobrancelhas) que passam a seguir os ossos do modelo. */
+  parts?: string[];
   /** Objetos presos a um osso (ex.: espada na mão direita). */
   attach?: { url: string; bone: string; position?: [number, number, number]; rotation?: [number, number, number]; size?: number }[];
 }
@@ -81,6 +83,25 @@ export class GltfCharacter implements Avatar {
     if (!gltf) throw new Error(`Modelo não carregado: ${url}`);
 
     const model = cloneSkinned(gltf.scene);
+    // Juntar partes (ex.: corpo e cabeça por baixo da roupa): cada malha passa a usar os ossos
+    // do modelo principal com o mesmo nome, por isso anima em conjunto com a roupa.
+    const anchor = (() => {
+      let a: THREE.Object3D | null = null;
+      model.traverse((o) => { if (!a && (o as THREE.SkinnedMesh).isSkinnedMesh) a = o.parent; });
+      return a ?? model;
+    })();
+    for (const url of look.parts ?? []) {
+      const part = cache.get(url);
+      if (!part) continue;
+      const copy = cloneSkinned(part.scene);
+      const meshes: THREE.SkinnedMesh[] = [];
+      copy.traverse((o) => { if ((o as THREE.SkinnedMesh).isSkinnedMesh) meshes.push(o as THREE.SkinnedMesh); });
+      for (const sk of meshes) {
+        const bones = sk.skeleton.bones.map((b) => (model.getObjectByName(b.name) as THREE.Bone) ?? b);
+        sk.bind(new THREE.Skeleton(bones, sk.skeleton.boneInverses), sk.bindMatrix);
+        anchor.add(sk);
+      }
+    }
     // Materiais próprios para cada cópia (para poder recolorir sem afetar as outras).
     model.traverse((o) => {
       const mesh = o as THREE.SkinnedMesh;

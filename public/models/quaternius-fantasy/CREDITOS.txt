@@ -5,3 +5,4 @@ Obtidos em https://quaternius.itch.io (versões Standard, gratuitas), convertido
 - props/                                           Fantasy Props MegaKit (espada, escudo, barril, caixote, bancas, suporte de armas...)
 - village/  e  ../../textures/*.jpg                Medieval Village MegaKit (paredes, portas, janelas, telhados; texturas de pedra)
 - nature/                                          Stylized Nature MegaKit (árvores, pinheiros, rochas, arbustos)
+- parts/                                           Universal Base Characters (corpo com cara, cabelo, barba e sobrancelhas)
